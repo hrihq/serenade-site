@@ -121,15 +121,7 @@ p{margin:0}
 .dev.d3{transform:translate3d(22px,0,30px) scale(1);z-index:3;
   box-shadow:0 40px 76px -32px rgba(73,71,62,.72)}
 .deck:hover .dev.d1{transform:translate3d(-150px,26px,-140px) rotateY(27deg) scale(.96)}
-
-/* ── strip spec ── */
-.ticker{border-block:1px solid var(--line);overflow:hidden;padding:16px 0;background:var(--cream-2);
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
-  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.ticker-in{display:flex;width:max-content;animation:slide 40s linear infinite}
-.ticker-in span{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--faint);padding-right:46px;white-space:nowrap}
-@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+to{transform:translateX(-50%)}}
 
 /* ── section ── */
 .sec{padding:96px 0;position:relative;overflow:hidden;scroll-margin-top:104px}
@@ -399,8 +391,7 @@ summary svg{transition:transform .35s cubic-bezier(.2,.7,.2,1)}
   .rows .row,.flow .frow{opacity:1;transform:none}
   .sec-head h2{letter-spacing:-.5px}
   .rv{opacity:1;transform:none;transition:none}
-  .ticker-in{animation:none}
-  .wui .eq i{animation:none}
+    .wui .eq i{animation:none}
   .card,.dev{transition:none}
 }
 </style>
@@ -460,12 +451,6 @@ summary svg{transition:transform .35s cubic-bezier(.2,.7,.2,1)}
   </div>
 </header>
 
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-in">
-    <span>v1.13 · code 17</span><span>serenade-modern.apk · 9,0 MB · minSdk 33</span><span>serenade-legacy.apk · 9,2 MB · minSdk 29</span><span>NewPipeExtractor 0.27.1</span><span>Media3 1.8.0</span><span>Rhino 1.8.1</span><span>lrclib.net</span><span>miuix 0.9.4</span><span>backdrop 2.0.1</span><span>compileSdk 37</span><span>tanda tangan tetap</span><span>tanpa akun</span>
-    <span>v1.13 · code 17</span><span>serenade-modern.apk · 9,0 MB · minSdk 33</span><span>serenade-legacy.apk · 9,2 MB · minSdk 29</span><span>NewPipeExtractor 0.27.1</span><span>Media3 1.8.0</span><span>Rhino 1.8.1</span><span>lrclib.net</span><span>miuix 0.9.4</span><span>backdrop 2.0.1</span><span>compileSdk 37</span><span>tanda tangan tetap</span><span>tanpa akun</span>
-  </div>
-</div>
 
 <section class="sec dark" id="tampilan">
   <span class="blob o" style="width:min(34vw,420px);aspect-ratio:1;left:-160px;bottom:-120px" aria-hidden="true"></span>
