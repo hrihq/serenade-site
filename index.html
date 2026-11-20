@@ -65,7 +65,7 @@ p{margin:0}
 .tagline{display:inline-flex;align-items:center;gap:9px;color:var(--muted);margin-bottom:22px;font-family:var(--mono);
   font-size:11.5px;letter-spacing:.16em;text-transform:uppercase}
 .tagline i{width:6px;height:6px;border-radius:50%;background:var(--accent);display:block}
-.hero h1{font-size:clamp(36px,4.4vw,50px);line-height:1.07;letter-spacing:-1.7px}
+.hero h1{font-size:clamp(36px,4.4vw,50px);line-height:1.07;letter-spacing:-1.7px;text-wrap:balance}
 .hero h1 em{font-style:normal}
 .hero .lede{margin-top:22px;font-size:19px;line-height:1.5;color:var(--muted);max-width:44ch;letter-spacing:-.44px}
 .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
@@ -278,14 +278,12 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:52px 0 40px
   .btn{justify-content:center}
   .facts{gap:0;margin-top:26px;font-size:12px}
   .facts span{flex:1 0 50%;padding:9px 0;border-left:0;border-top:1px solid var(--line)}
-  .facts span:nth-child(2){text-align:right;padding-right:0}
   .facts span:first-child,.facts span:nth-child(2){border-top:0}
   .dev.d1{display:none}
   .deck{height:min(60vh,420px)}
   .dev.d3{transform:translate3d(0,0,20px) scale(.92)}
   .sec{padding:72px 0}
   .stack{height:min(64vh,470px);perspective:1100px}
-  .stage{padding:0 10px}
 }
 
 /* ── reveal halus ── */
@@ -343,7 +341,7 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:52px 0 40px
         <a class="btn btn-line" href="#unduh">Android 10–12</a>
       </div>
       <div class="facts">
-        <span>Android 13+</span><span>Android 10–12</span><span>Tanpa login</span><span>Tanda tangan tetap</span>
+        <span>Tanpa login</span><span>Dua APK terpisah</span><span>Tanda tangan tetap</span>
       </div>
     </div>
     <div class="deck" id="deck" aria-label="Pratinjau aplikasi">
@@ -655,7 +653,7 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:52px 0 40px
     var sc = document.createElement("span"); sc.className = "sc"; c.querySelector(".fr").appendChild(sc);
   });
 
-  var layoutW = function(){ return window.innerWidth < 820 ? 0.62 : 0.70; };
+  var layoutW = function(){ return window.innerWidth < 820 ? 0.72 : 0.70; };
 
   function layout(){
     var w = cards[0].offsetWidth || 220, n = cards.length;
