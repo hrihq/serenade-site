@@ -287,6 +287,64 @@ footer{border-top:1px solid var(--line);padding:40px 0 48px}
 .foot-links a:hover{color:var(--ink)}
 .foot-note{width:100%;margin-top:22px;font-size:12.5px;color:var(--faint);line-height:1.6}
 
+/* ── interaktif: progress bar, ticker, spotlight, galeri, lightbox ── */
+#prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;
+  background:linear-gradient(90deg,var(--accent),#7FB0FF)}
+
+.ticker{border-block:1px solid var(--line);background:var(--surface);overflow:hidden;padding:15px 0}
+.ticker-in{display:flex;width:max-content;animation:slide 34s linear infinite}
+.ticker-in span{font:600 12px/1 var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--faint);
+  display:inline-flex;align-items:center;gap:30px;padding-right:30px}
+.ticker-in span::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.7}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.cell{--mx:50%;--my:0%}
+.cell::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;
+  background:radial-gradient(360px circle at var(--mx) var(--my),rgba(52,130,255,.15),transparent 70%)}
+.cell:hover::after{opacity:1}
+
+.shots-rail{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:10px 4px 6px;scrollbar-width:none;-ms-overflow-style:none}
+.shots-rail::-webkit-scrollbar{display:none}
+.shot{flex:0 0 auto;width:244px;scroll-snap-align:center;cursor:zoom-in;
+  transition:transform .4s cubic-bezier(.2,.7,.2,1),opacity .4s}
+.shot .frame{border-radius:26px;padding:8px;background:linear-gradient(160deg,#232A34,#12161C 55%);
+  border:1px solid rgba(255,255,255,.1);box-shadow:0 26px 60px -26px rgba(0,0,0,.9);
+  transform-style:preserve-3d;transition:box-shadow .3s,border-color .3s}
+.shot img{width:100%;border-radius:20px;display:block;background:#0B0E13}
+.shot .cap{margin-top:12px;font-size:12.5px;color:var(--muted);text-align:center;line-height:1.5}
+.shot .cap b{color:var(--ink);font-weight:600;display:block;margin-bottom:2px;font-size:13.5px}
+.shot:hover .frame,.shot.active .frame{border-color:rgba(52,130,255,.42);
+  box-shadow:0 34px 78px -28px rgba(52,130,255,.38)}
+.shot:focus-visible{outline:2px solid var(--accent);outline-offset:6px;border-radius:26px}
+
+.rail-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:8px}
+.rail-nav{display:flex;gap:10px}
+.rail-btn{width:42px;height:42px;border-radius:50%;background:var(--surface);border:1px solid var(--line-2);
+  color:var(--ink);display:grid;place-items:center;cursor:pointer;
+  transition:background .18s,border-color .18s,transform .18s}
+.rail-btn:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.28)}
+.rail-btn:active{transform:scale(.94)}
+.rail-hint{font-size:12.5px;color:var(--faint)}
+
+.lb{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:24px;
+  background:rgba(5,7,10,.88);backdrop-filter:blur(14px);opacity:0;pointer-events:none;transition:opacity .25s}
+.lb.on{opacity:1;pointer-events:auto}
+.lb-fig{display:flex;flex-direction:column;align-items:center;gap:14px;
+  transform:scale(.94);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.lb.on .lb-fig{transform:none}
+.lb img{max-height:74vh;border-radius:20px;border:1px solid rgba(255,255,255,.13);
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.95)}
+.lb-cap{color:var(--muted);font-size:14px;text-align:center;max-width:54ch;line-height:1.55}
+.lb-cap b{color:var(--ink)}
+.lb-x{position:absolute;top:20px;right:22px;width:44px;height:44px;border-radius:50%;
+  background:var(--surface);border:1px solid var(--line-2);color:var(--ink);font-size:17px;cursor:pointer}
+.lb-btn{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:58px;border-radius:14px;
+  background:var(--surface);border:1px solid var(--line-2);color:var(--ink);cursor:pointer;font-size:17px}
+.lb-btn.p{left:18px}.lb-btn.n{right:18px}
+body.lock{overflow:hidden}
+@media(max-width:640px){.lb-btn{display:none}.shot{width:188px}}
+
 /* ── reveal (progressive: konten tetap terlihat bila JS/IO gagal) ── */
 .rv.in{animation:rvIn .6s ease both}
 @keyframes rvIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
@@ -299,6 +357,7 @@ footer{border-top:1px solid var(--line);padding:40px 0 48px}
 </style>
 </head>
 <body>
+<div id="prog" aria-hidden="true"></div>
 
 <!-- icon sprite -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -332,6 +391,7 @@ footer{border-top:1px solid var(--line);padding:40px 0 48px}
   <div class="wrap nav-in">
     <a class="brand" href="#top"><img src="assets/icon.png" alt="">Serenade</a>
     <div class="nav-links">
+      <a href="#tampilan">Tampilan</a>
       <a href="#fitur">Fitur</a>
       <a href="#widget">Widget</a>
       <a href="#recap">Recap</a>
@@ -433,6 +493,78 @@ footer{border-top:1px solid var(--line);padding:40px 0 48px}
     </div>
   </div>
 </div>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-in">
+    <span>Lirik sinkron</span><span>Unduhan offline</span><span>Recap Wrapped</span><span>Widget 5 ukuran</span>
+    <span>Smart queue</span><span>Daily Mix</span><span>Mood discovery</span><span>Equalizer</span>
+    <span>Impor playlist</span><span>Tab Story</span><span>FLAC &amp; hi-res</span><span>Lagu lokal</span>
+    <span>Lirik sinkron</span><span>Unduhan offline</span><span>Recap Wrapped</span><span>Widget 5 ukuran</span>
+    <span>Smart queue</span><span>Daily Mix</span><span>Mood discovery</span><span>Equalizer</span>
+    <span>Impor playlist</span><span>Tab Story</span><span>FLAC &amp; hi-res</span><span>Lagu lokal</span>
+  </div>
+</div>
+
+<section id="tampilan" style="padding-top:64px">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kicker">Tampilan</div>
+      <h2>Lihat langsung isinya.</h2>
+      <p>Sepuluh layar dari aplikasi — geser untuk menjelajah, ketuk untuk memperbesar.</p>
+    </div>
+
+    <div class="rail-head rv">
+      <span class="rail-hint">Geser atau gunakan tombol ← →</span>
+      <div class="rail-nav">
+        <button class="rail-btn" id="railPrev" aria-label="Sebelumnya">&#8592;</button>
+        <button class="rail-btn" id="railNext" aria-label="Berikutnya">&#8594;</button>
+      </div>
+    </div>
+
+    <div class="shots-rail rv" id="rail" role="list">
+      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/01-beranda.jpg" data-cap="Beranda personal dengan sapaan, chip mood, dan Daily Mix yang berganti tiap hari.">
+        <span class="frame"><img src="assets/shots/01-beranda.jpg" alt="Layar Beranda Serenade" loading="lazy" width="576" height="1280"></span>
+        <figcaption class="cap"><b>Beranda</b>Mood, Daily Mix, personal</figcaption>
+      </figure>
+      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/02-library-riwayat.jpg" data-cap="Riwayat putar lengkap dengan artwork, artis, durasi, dan tombol putar per lagu.">
+        <span class="frame"><img src="assets/shots/02-library-riwayat.jpg" alt="Daftar riwayat putar" loading="lazy" width="576" height="1280"></span>
+        <figcaption class="cap"><b>Riwayat</b>Terakhir diputar</figcaption>
+      </figure>
+      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/03-library-fitur.jpg" data-cap="Library: recap, impor playlist, lagu lokal, dan NetEase FLAC dalam satu tempat.">
+        <span class="frame"><img src="assets/shots/03-library-fitur.jpg" alt="Kartu fitur di Library" loading="lazy" width="576" height="1280"></span>
+        <figcaption class="cap"><b>Library</b>Playlist &amp; pintasan fitur</figcaption>
+      </figure>
+      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/04-impor-playlist.jpg" data-cap="Impor playlist dari aplikasi lain — tempel tautan, tiap lagu dicocokkan ke katalog.">
+        <span class="frame"><img src="assets/shots/04-impor-playlist.jpg" alt="Layar impor playlist" loading="lazy" width="576" height="1280"></span>
+        <figcaption class="cap"><b>Impor</b>Dari aplikasi lain</figcaption>
+      </figure>
+      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/05-netease-flac.jpg" data-cap="Pencarian sumber kedua: FLAC dan hi-res, aktif penuh dengan akun VIP.">
+        <span class="frame"><img src="assets/shots/05-netease-flac.jpg" alt="Layar pencarian NetEase FLAC" loading="lazy" width="576" height="1280"></span>
+        <figcaption class="cap"><b>Sumber kedua</b>FLAC &amp; hi-res</figcaption>
+      </figure>
+      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/06-lagu-lokal.jpg" data-cap="Lagu di perangkat ikut dipindai — FLAC, MP3, M4A, OGG — lalu diputar dalam antrean yang sama.">
+        <span class="frame"><img src="assets/shots/06-lagu-lokal.jpg" alt="Daftar lagu lokal" loading="lazy" width="576" height="1280"></span>
+        <figcaption class="cap"><b>Lagu lokal</b>FLAC dari perangkat</figcaption>
+      </figure>
+      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/07-tema-audio.jpg" data-cap="Tema gelap/terang, warna aksen bebas, background sendiri, plus equalizer lima band.">
+        <span class="frame"><img src="assets/shots/07-tema-audio.jpg" alt="Pengaturan tampilan dan audio" loading="lazy" width="576" height="1280"></span>
+        <figcaption class="cap"><b>Tampilan &amp; audio</b>Aksen bebas, equalizer</figcaption>
+      </figure>
+      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/08-pengaturan-offline.jpg" data-cap="Kontrol offline: cache otomatis, ukuran unduhan, dan hapus semua dalam satu sentuhan.">
+        <span class="frame"><img src="assets/shots/08-pengaturan-offline.jpg" alt="Pengaturan penyimpanan offline" loading="lazy" width="576" height="1280"></span>
+        <figcaption class="cap"><b>Offline</b>Cache &amp; unduhan</figcaption>
+      </figure>
+      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/09-story.jpg" data-cap="Tab Story: pilih foto, susun kartu musik di atasnya, lalu ekspor 1080×1920.">
+        <span class="frame"><img src="assets/shots/09-story.jpg" alt="Tab Story" loading="lazy" width="576" height="1280"></span>
+        <figcaption class="cap"><b>Story</b>Kartu musik di foto</figcaption>
+      </figure>
+      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/10-recap.jpg" data-cap="Recap: periode bulan/tahun/semua, tombol putar story dan bagikan ke Instagram atau WhatsApp.">
+        <span class="frame"><img src="assets/shots/10-recap.jpg" alt="Layar Recap" loading="lazy" width="576" height="1280"></span>
+        <figcaption class="cap"><b>Recap</b>Statistik &amp; bagikan</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
 
 <section id="fitur">
   <div class="wrap">
@@ -699,7 +831,7 @@ footer{border-top:1px solid var(--line);padding:40px 0 48px}
       </details>
       <details>
         <summary>Apakah aplikasi ini resmi?<svg class="chev"><use href="#i-chev"/></svg></summary>
-        <div class="a">Bukan produk resmi YouTube, Google, Spotify, Apple, maupun NetEase. Serenade adalah klien pihak ketiga untuk pemakaian pribadi yang membaca katalog publik; hak cipta lagu tetap milik pemegangnya.</div>
+        <div class="a">Bukan produk resmi layanan musik mana pun. Serenade adalah klien pihak ketiga untuk pemakaian pribadi yang membaca katalog publik; hak cipta lagu tetap milik pemegangnya masing-masing.</div>
       </details>
     </div>
   </div>
@@ -713,24 +845,141 @@ footer{border-top:1px solid var(--line);padding:40px 0 48px}
       <a href="#unduh">Unduh</a>
       <a href="https://github.com/hrihq/serenade-site/releases" target="_blank" rel="noopener">Semua versi</a>
     </div>
-    <p class="foot-note">Serenade tidak berafiliasi dengan YouTube, Google, Spotify, Apple, maupun NetEase. Katalog dan stream berasal dari layanan publik; gunakan sesuai ketentuan layanan masing-masing. Dibangun dengan NewPipeExtractor (GPL-3.0) untuk resolusi aliran, lrclib.net untuk lirik, serta miuix dan backdrop untuk bahasa visual kaca.</p>
+    <p class="foot-note">Serenade adalah pemutar musik untuk pemakaian pribadi. Katalog dan aliran audio berasal dari layanan publik; hak cipta lagu tetap milik pemegangnya. Dibangun dengan NewPipeExtractor (GPL-3.0) untuk resolusi aliran, lrclib.net untuk lirik, serta miuix dan backdrop untuk bahasa visual kaca.</p>
   </div>
 </footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Pratinjau layar">
+  <button class="lb-x" id="lbX" aria-label="Tutup">&#10005;</button>
+  <button class="lb-btn p" id="lbPrev" aria-label="Sebelumnya">&#8592;</button>
+  <figure class="lb-fig">
+    <img id="lbImg" src="" alt="">
+    <figcaption class="lb-cap" id="lbCap"></figcaption>
+  </figure>
+  <button class="lb-btn n" id="lbNext" aria-label="Berikutnya">&#8594;</button>
+</div>
 
 <script>
 (function(){
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ── reveal saat digulir ── */
   var els = document.querySelectorAll(".rv");
   if (reduce || !("IntersectionObserver" in window)) {
     els.forEach(function(e){ e.classList.add("in"); });
-    return;
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    els.forEach(function(e){ io.observe(e); });
   }
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(en){
-      if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+
+  /* ── garis progres bacaan ── */
+  var prog = document.getElementById("prog"), ticking = false;
+  function paint(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
+    ticking = false;
+  }
+  window.addEventListener("scroll", function(){
+    if (!ticking) { ticking = true; window.requestAnimationFrame(paint); }
+  }, { passive: true });
+  paint();
+
+  /* ── spotlight kartu mengikuti kursor ── */
+  if (!reduce && window.matchMedia("(hover: hover)").matches) {
+    document.querySelectorAll(".cell").forEach(function(cell){
+      cell.addEventListener("pointermove", function(ev){
+        var r = cell.getBoundingClientRect();
+        cell.style.setProperty("--mx", (ev.clientX - r.left) + "px");
+        cell.style.setProperty("--my", (ev.clientY - r.top) + "px");
+      });
     });
-  }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
-  els.forEach(function(e){ io.observe(e); });
+  }
+
+  /* ── galeri: tombol geser, kartu aktif, tilt halus ── */
+  var rail = document.getElementById("rail");
+  var shots = rail ? Array.prototype.slice.call(rail.querySelectorAll(".shot")) : [];
+  function step(dir){
+    var w = shots.length ? shots[0].offsetWidth + 18 : 260;
+    rail.scrollBy({ left: dir * w, behavior: reduce ? "auto" : "smooth" });
+  }
+  var bp = document.getElementById("railPrev"), bn = document.getElementById("railNext");
+  if (bp) bp.addEventListener("click", function(){ step(-1); });
+  if (bn) bn.addEventListener("click", function(){ step(1); });
+
+  if (rail && "IntersectionObserver" in window) {
+    var io2 = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        var s = en.target;
+        s.classList.toggle("active", en.isIntersecting && en.intersectionRatio > 0.62);
+      });
+    }, { root: rail, threshold: [0, 0.62, 0.95] });
+    shots.forEach(function(s){ io2.observe(s); });
+  }
+
+  if (!reduce && window.matchMedia("(hover: hover)").matches) {
+    shots.forEach(function(s){
+      var frame = s.querySelector(".frame");
+      s.addEventListener("pointermove", function(ev){
+        var r = s.getBoundingClientRect();
+        var dx = (ev.clientX - r.left) / r.width - .5;
+        var dy = (ev.clientY - r.top) / r.height - .5;
+        frame.style.transform = "rotateY(" + (dx * 7).toFixed(2) + "deg) rotateX(" + (-dy * 7).toFixed(2) + "deg) translateY(-6px)";
+      });
+      s.addEventListener("pointerleave", function(){ frame.style.transform = ""; });
+    });
+  }
+
+  /* ── lightbox ── */
+  var lb = document.getElementById("lb"), lbImg = document.getElementById("lbImg"),
+      lbCap = document.getElementById("lbCap"), idx = 0;
+  function open(i){
+    if (!shots.length) return;
+    idx = (i + shots.length) % shots.length;
+    var s = shots[idx];
+    lbImg.src = s.getAttribute("data-src");
+    lbImg.alt = s.querySelector("img") ? s.querySelector("img").alt : "";
+    var t = s.querySelector(".cap b"), sub = s.querySelector(".cap");
+    lbCap.innerHTML = (t ? "<b>" + t.textContent + "</b> — " : "") + s.getAttribute("data-cap");
+    lb.classList.add("on");
+    document.body.classList.add("lock");
+  }
+  function close(){
+    lb.classList.remove("on");
+    document.body.classList.remove("lock");
+  }
+  shots.forEach(function(s, i){
+    s.setAttribute("data-i", i);
+    s.addEventListener("click", function(){ open(i); });
+    s.addEventListener("keydown", function(ev){
+      if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); open(i); }
+    });
+  });
+  if (lb) {
+    document.getElementById("lbX").addEventListener("click", close);
+    document.getElementById("lbPrev").addEventListener("click", function(){ open(idx - 1); });
+    document.getElementById("lbNext").addEventListener("click", function(){ open(idx + 1); });
+    lb.addEventListener("click", function(ev){ if (ev.target === lb) close(); });
+    document.addEventListener("keydown", function(ev){
+      if (!lb.classList.contains("on")) return;
+      if (ev.key === "Escape") close();
+      if (ev.key === "ArrowLeft") open(idx - 1);
+      if (ev.key === "ArrowRight") open(idx + 1);
+    });
+    /* geser kiri/kanan di dalam lightbox */
+    var sx = null;
+    lb.addEventListener("touchstart", function(ev){ sx = ev.touches[0].clientX; }, { passive: true });
+    lb.addEventListener("touchend", function(ev){
+      if (sx === null) return;
+      var dx = ev.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 50) open(dx < 0 ? idx + 1 : idx - 1);
+      sx = null;
+    });
+  }
 })();
 </script>
 </body>
