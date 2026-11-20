@@ -3,394 +3,322 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark">
 <title>Serenade — Music player Android, tanpa akun</title>
-<meta name="description" content="Serenade: music player Android dengan navbar liquid glass, streaming katalog YouTube Music, lirik synced, recap, dan widget. Tanpa login, tanpa iklan.">
+<meta name="description" content="Pemutar musik Android dengan navbar liquid glass, lirik sinkron, unduhan offline, video recap, dan widget layar utama. Tanpa akun, tanpa iklan.">
+<meta name="theme-color" content="#08080A">
 <meta property="og:title" content="Serenade — Music player Android">
-<meta property="og:description" content="Streaming katalog YouTube Music, lirik synced, recap ala story, widget 5 varian. Tanpa akun, tanpa iklan.">
-<meta property="og:image" content="assets/icon.png">
-<link rel="icon" type="image/png" href="assets/icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta property="og:description" content="Seluruh katalog musik. Tanpa akun, tanpa iklan. Dua APK: Android 13+ dan Android 10–12.">
+<meta property="og:image" content="assets/shots/01-beranda.jpg">
+<link rel="icon" href="assets/icon.png">
 <style>
+*,*::before,*::after{box-sizing:border-box}
 :root{
-  --bg:#0A0C0F; --surface:#10141A; --surface-2:#151A21; --surface-3:#1B212A;
-  --line:rgba(255,255,255,.075); --line-2:rgba(255,255,255,.12);
-  --ink:#EEF1F5; --muted:#98A1AE; --faint:#5D6673;
-  --accent:#3482FF; --accent-ink:#7FB0FF; --accent-soft:rgba(52,130,255,.13);
-  --pill:999px; --r-lg:22px; --r-md:16px; --r-sm:11px;
-  --display:"Sora",system-ui,sans-serif; --body:"Manrope",system-ui,sans-serif;
-  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  --max:1120px;
+  --bg:#08080A; --bg-soft:#101014; --surface:#16161A;
+  --line:rgba(255,255,255,.10); --line-2:rgba(255,255,255,.18);
+  --ink:#F5F5F7; --muted:rgba(245,245,247,.62); --faint:rgba(245,245,247,.40);
+  --paper:#F5F5F7; --paper-ink:#111114; --paper-muted:rgba(17,17,20,.62);
+  --paper-line:rgba(17,17,20,.14);
+  --accent:#E23A6E; --accent-soft:rgba(226,58,110,.16); --accent-ink:#FF7FA5;
+  --max:1060px;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;overflow-x:clip}
-body{
-  margin:0;background:var(--bg);color:var(--ink);
-  font:400 16px/1.65 var(--body);
-  -webkit-font-smoothing:antialiased;overflow-x:hidden;
-}
-::selection{background:var(--accent);color:#fff}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:17px;line-height:1.47;letter-spacing:-.37px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.lock{overflow:hidden}
+img{max-width:100%}
 a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
-h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.02em;line-height:1.12;margin:0;text-wrap:balance}
-p{margin:0;text-wrap:pretty}
-.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
-.mono{font-family:var(--mono)}
-
-/* ── nav ─────────────────────────────────────────── */
-.nav{position:sticky;top:0;z-index:50;background:rgba(10,12,15,.82);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.nav-in{display:flex;align-items:center;gap:28px;height:64px}
-.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:-.01em}
-.brand img{width:28px;height:28px;border-radius:8px}
-.nav-links{display:flex;gap:26px;margin-left:8px}
-.nav-links a{font-size:14px;color:var(--muted);transition:color .18s}
-.nav-links a:hover{color:var(--ink)}
-.nav-cta{margin-left:auto}
-@media(max-width:720px){.nav-links{display:none}}
-
-/* ── buttons ─────────────────────────────────────── */
-.btn{display:inline-flex;align-items:center;gap:9px;border-radius:var(--pill);
-  padding:13px 24px;font:600 15px/1 var(--body);border:1px solid transparent;
-  cursor:pointer;transition:transform .16s ease,background .18s,border-color .18s;white-space:nowrap}
-.btn:active{transform:scale(.975)}
-.btn-primary{background:var(--accent);color:#fff}
-.btn-primary:hover{background:#2E6BE6}
-.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line-2)}
-.btn-ghost:hover{border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.03)}
-.btn-sm{padding:9px 18px;font-size:13.5px}
-.btn svg{width:17px;height:17px;flex:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-1.1px}
+p{margin:0}
+.wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 22px}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
 
-/* ── hero ────────────────────────────────────────── */
-.hero{position:relative;padding:88px 0 72px}
-.hero::before{content:"";position:absolute;top:-180px;right:-120px;width:640px;height:640px;
-  background:radial-gradient(circle,rgba(52,130,255,.16),transparent 62%);pointer-events:none;filter:blur(8px)}
-.hero-grid{position:relative;display:grid;grid-template-columns:1.02fr .98fr;gap:56px;align-items:center}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;font:600 12px/1 var(--body);
-  letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);
-  background:var(--accent-soft);border:1px solid rgba(52,130,255,.22);
-  padding:8px 14px;border-radius:var(--pill);margin-bottom:26px}
-.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
-.hero h1{font-size:clamp(32px,4vw,44px);font-weight:700;letter-spacing:-.035em}
-.hero h1 .l1{display:block}
-.hero h1 em{font-style:normal;color:var(--accent-ink);display:block}
-@media(min-width:901px){.hero h1 .l1,.hero h1 em{white-space:nowrap}}
-.hero-sub{margin-top:22px;font-size:17.5px;color:var(--muted);max-width:44ch}
-.hero-actions{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap}
-.hero-meta{display:flex;gap:22px;margin-top:26px;font-size:13px;color:var(--faint);flex-wrap:wrap}
-.hero-meta span{display:inline-flex;align-items:center;gap:7px}
-.hero-meta svg{width:14px;height:14px;opacity:.8}
-@media(max-width:900px){
-  .hero{padding:56px 0 48px}
-  .hero-grid{grid-template-columns:1fr;gap:48px}
-  .hero-phone{justify-self:center}
-}
+/* ── progres baca ── */
+#prog{position:fixed;inset:0 auto auto 0;height:2px;width:0;z-index:60;background:var(--accent)}
 
-/* ── phone mockup ────────────────────────────────── */
-.phone{width:290px;border-radius:42px;padding:11px;background:linear-gradient(160deg,#232A34,#12161C 55%);
-  border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 90px -30px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.4)}
-.phone-screen{border-radius:32px;background:var(--surface);overflow:hidden;position:relative;
-  height:580px;display:flex;flex-direction:column}
-.phone-notch{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:9px;height:9px;
-  border-radius:50%;background:#05070A;box-shadow:inset 0 0 0 1.5px #1a2230;z-index:5}
-.p-status{display:flex;justify-content:space-between;align-items:center;padding:11px 16px 2px;font:600 10.5px/1 var(--body);color:var(--muted)}
-.p-status .sys{display:flex;align-items:center;gap:5px}
-.p-status .sys svg{width:13px;height:13px;opacity:.9}
-.p-top{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 6px;color:var(--muted)}
-.p-top .lbl{font:600 9.5px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
-.p-art{margin:14px 18px 0;aspect-ratio:1;border-radius:18px;position:relative;overflow:hidden;
-  background:linear-gradient(150deg,#1D2530,#131922);border:1px solid var(--line)}
-.p-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.16}
-.p-art .glow{position:absolute;inset:auto -20% -45% -20%;height:75%;
-  background:radial-gradient(ellipse at center,rgba(52,130,255,.4),transparent 70%)}
-.p-meta{padding:15px 18px 0}
-.p-title{font:600 15.5px/1.25 var(--display);letter-spacing:-.01em;color:var(--ink)}
-.p-artist{font:500 12px/1.3 var(--body);color:var(--muted);margin-top:3px}
-.bar{height:11px;border-radius:6px;background:var(--surface-3)}
-.bar.w70{width:70%}.bar.w45{width:45%;height:9px;margin-top:9px;background:#202733}
-.p-progress{padding:18px 18px 0}
-.p-track{height:4px;border-radius:var(--pill);background:#222A35;position:relative}
-.p-fill{position:absolute;inset:0 auto 0 0;width:38%;border-radius:var(--pill);background:var(--accent)}
-.p-knob{position:absolute;left:38%;top:50%;transform:translate(-50%,-50%);width:11px;height:11px;
-  border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(52,130,255,.25)}
-.p-times{display:flex;justify-content:space-between;margin-top:8px;font:500 10px/1 var(--mono);color:var(--faint)}
-.p-controls{display:flex;align-items:center;justify-content:center;gap:22px;padding:20px 18px 6px;color:var(--ink)}
-.p-controls svg{width:20px;height:20px;opacity:.85}
-.p-play{width:52px;height:52px;border-radius:50%;background:var(--accent);display:grid;place-items:center;color:#fff}
-.p-play svg{width:22px;height:22px;opacity:1;margin-left:2px}
-.p-lyrics{margin:15px 18px 0;padding:13px 14px;border-radius:14px;background:var(--surface-2);border:1px solid var(--line)}
-.p-lyrics .ln{font:500 11.5px/1.5 var(--body);color:var(--faint);margin-bottom:6px;transition:color .3s}
-.p-lyrics .ln.on{color:var(--accent-ink);font-weight:600;text-shadow:0 0 14px rgba(52,130,255,.55)}
-.p-lyrics .ln:last-child{margin-bottom:0}
-.p-nav{margin-top:auto;display:flex;justify-content:space-around;align-items:center;
-  padding:12px 20px 16px;background:rgba(21,26,33,.55);border-top:1px solid rgba(255,255,255,.08);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);position:relative}
-.p-nav::before{content:"";position:absolute;inset:0;background:
-  radial-gradient(90px 40px at 30% 0%,rgba(52,130,255,.18),transparent 70%);pointer-events:none}
-.p-nav .tab{display:flex;flex-direction:column;align-items:center;gap:5px;font:600 9px/1 var(--body);color:var(--faint);position:relative}
-.p-nav .tab.on{color:var(--accent-ink)}
-.p-nav svg{width:19px;height:19px}
+/* ── nav: kaca, memadat saat digulir ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:55;height:60px;display:flex;align-items:center;
+  background:rgba(8,8,10,0);backdrop-filter:blur(0px);transition:background .4s,backdrop-filter .4s,border-color .4s;
+  border-bottom:1px solid transparent}
+.nav.stuck{background:rgba(8,8,10,.72);backdrop-filter:saturate(180%) blur(20px);border-bottom-color:var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.4px;font-size:17px}
+.brand img{width:26px;height:26px;border-radius:8px}
+.brand span{display:none}
+@media(min-width:560px){.brand span{display:inline}}
+.nav-links{display:none;gap:26px;font-size:14px;color:var(--muted)}
+.nav-links a{transition:color .2s}
+.nav-links a:hover,.nav-links a.on{color:var(--ink)}
+@media(min-width:860px){.nav-links{display:flex}}
+.nav-cta{font-size:14px;padding:9px 16px;border-radius:980px;background:var(--accent);color:#fff;
+  transition:transform .2s,filter .2s}
+.nav-cta:hover{filter:brightness(1.08);transform:translateY(-1px)}
 
-/* equalizer */
-.eq{display:inline-flex;align-items:flex-end;gap:2.5px;height:14px}
-.eq i{width:3px;background:var(--accent);border-radius:2px;animation:eq 1.1s ease-in-out infinite}
-.eq i:nth-child(1){height:60%;animation-delay:0s}
-.eq i:nth-child(2){height:100%;animation-delay:.18s}
-.eq i:nth-child(3){height:45%;animation-delay:.36s}
-.eq i:nth-child(4){height:80%;animation-delay:.54s}
-@keyframes eq{0%,100%{transform:scaleY(.45)}50%{transform:scaleY(1)}}
+/* ── hero ── */
+.hero{padding:126px 0 70px;position:relative}
+.hero-grid{position:relative;display:grid;gap:46px;align-items:center}
+@media(min-width:900px){.hero-grid{grid-template-columns:1.18fr .82fr;gap:30px}}
+@media(min-width:1100px){.hero-grid{grid-template-columns:1.22fr .78fr}}
+.tagline{display:inline-flex;align-items:center;gap:9px;color:var(--muted);margin-bottom:22px;font-family:var(--mono);
+  font-size:11.5px;letter-spacing:.16em;text-transform:uppercase}
+.tagline i{width:6px;height:6px;border-radius:50%;background:var(--accent);display:block}
+.hero h1{font-size:clamp(36px,4.4vw,50px);line-height:1.07;letter-spacing:-1.7px}
+.hero h1 em{font-style:normal}
+.hero .lede{margin-top:22px;font-size:19px;line-height:1.5;color:var(--muted);max-width:44ch;letter-spacing:-.44px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:980px;font-size:15.5px;
+  letter-spacing:-.2px;transition:transform .22s cubic-bezier(.2,.7,.2,1),background .22s,border-color .22s}
+.btn svg{width:17px;height:17px}
+.btn-fill{background:var(--accent);color:#fff}
+.btn-fill:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn-line{border:1px solid var(--line-2);color:var(--ink)}
+.btn-line:hover{border-color:rgba(255,255,255,.42);transform:translateY(-2px)}
+.facts{display:flex;flex-wrap:wrap;margin-top:32px;color:var(--muted);font-family:var(--mono);font-size:12.5px;
+  letter-spacing:.02em}
+.facts span{padding:0 16px;border-left:1px solid var(--line)}
+.facts span:first-child{padding-left:0;border-left:0}
 
-/* ── section scaffolding ─────────────────────────── */
-section{padding:76px 0}
-.sec-head{max-width:620px;margin-bottom:44px}
-.sec-head .kicker{font:600 12px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:16px}
-.sec-head h2{font-size:clamp(27px,3.4vw,38px)}
-.sec-head p{margin-top:16px;color:var(--muted);font-size:16.5px}
+/* perangkat: screenshot asli, rasio HP sebenarnya */
+.deck{position:relative;height:min(66vh,500px);perspective:1400px;transform-style:preserve-3d}
+.dev{position:absolute;top:0;left:50%;width:206px;margin-left:-103px;border-radius:31px;padding:8px;
+  background:linear-gradient(180deg,#1A1A1F,#0B0B0E);border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 44px 80px -34px rgba(0,0,0,.95), 0 0 0 1px rgba(0,0,0,.5);
+  transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.dev img{display:block;width:100%;height:auto;aspect-ratio:9/19.5;object-fit:cover;object-position:top center;
+  border-radius:25px;background:#000}
+.dev.d1{transform:translate3d(-124px,32px,-170px) rotateY(24deg) scale(.94);opacity:.9;
+  box-shadow:0 30px 60px -26px rgba(0,0,0,.95), 0 0 0 1px rgba(0,0,0,.5)}
+.dev.d3{transform:translate3d(22px,0,30px) scale(1);z-index:3;
+  box-shadow:0 54px 96px -36px rgba(0,0,0,1), 0 0 0 1px rgba(255,255,255,.06)}
+.deck:hover .dev.d1{transform:translate3d(-146px,26px,-140px) rotateY(27deg) scale(.96);opacity:1}
 
-/* ── pipeline ────────────────────────────────────── */
-.pipeline{border-block:1px solid var(--line);background:var(--surface);padding:44px 0}
-.pipe-in{display:flex;align-items:center;gap:0;flex-wrap:wrap}
-.pipe-step{flex:1;min-width:200px;padding:6px 26px;position:relative}
-.pipe-step + .pipe-step{border-left:1px solid var(--line)}
-.pipe-step .n{font:600 11px/1 var(--mono);color:var(--faint);letter-spacing:.1em}
-.pipe-step h3{font-size:16.5px;margin:12px 0 8px;font-weight:600}
-.pipe-step p{font-size:13.5px;color:var(--muted);line-height:1.55}
-.pipe-step code{font:500 12px var(--mono);color:var(--accent-ink);background:var(--accent-soft);padding:2px 7px;border-radius:6px}
-@media(max-width:820px){.pipe-step{min-width:100%;padding:18px 0}.pipe-step + .pipe-step{border-left:0;border-top:1px solid var(--line)}}
-
-/* ── bento features ──────────────────────────────── */
-.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
-.cell{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
-  padding:28px;position:relative;overflow:hidden;transition:border-color .2s,transform .2s}
-.cell:hover{border-color:var(--line-2)}
-.cell h3{font-size:19px;margin-bottom:10px}
-.cell p{color:var(--muted);font-size:14.5px;line-height:1.6}
-.cell .tag{font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:16px;display:block}
-.c-hero{grid-column:span 7;grid-row:span 2;display:flex;flex-direction:column}
-.c-a{grid-column:span 5}
-.c-b{grid-column:span 5}
-.c-wide{grid-column:span 12}
-.c-d{grid-column:span 5}
-.c-e{grid-column:span 7}
-@media(max-width:880px){.c-hero,.c-a,.c-b,.c-wide,.c-d,.c-e{grid-column:span 12;grid-row:auto}}
-
-/* glass demo inside hero cell */
-.glass-demo{margin-top:auto;padding-top:26px}
-.glass-bar{display:flex;align-items:center;gap:14px;padding:13px 16px;border-radius:var(--pill);
-  background:rgba(27,33,42,.6);border:1px solid rgba(255,255,255,.1);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);position:relative;overflow:hidden}
-.glass-bar::before{content:"";position:absolute;inset:0;background:
-  radial-gradient(120px 60px at 18% 0%,rgba(52,130,255,.35),transparent 70%),
-  radial-gradient(140px 70px at 82% 100%,rgba(127,176,255,.22),transparent 70%);pointer-events:none}
-.glass-bar .art{width:38px;height:38px;border-radius:10px;background:var(--surface-3);flex:none;position:relative;overflow:hidden}
-.glass-bar .art img{width:100%;height:100%;object-fit:cover;opacity:.5}
-.glass-bar .txt{flex:1;min-width:0;position:relative;display:flex;flex-direction:column;gap:2px}
-.glass-bar .t{font:600 12.5px/1.2 var(--display);color:var(--ink)}
-.glass-bar .a{font:500 10.5px/1.2 var(--body);color:var(--muted)}
-.glass-bar .pr{height:3px;border-radius:var(--pill);background:rgba(255,255,255,.14);margin-top:7px;position:relative;overflow:hidden}
-.glass-bar .pr i{position:absolute;inset:0 auto 0 0;width:38%;background:var(--accent);border-radius:var(--pill)}
-.glass-bar .ctl{display:flex;gap:14px;color:var(--ink);position:relative}
-.glass-bar .ctl svg{width:18px;height:18px}
-.glass-nav{margin-top:12px;display:flex;justify-content:space-around;align-items:center;
-  padding:12px 18px;border-radius:var(--pill);background:rgba(27,33,42,.42);
-  border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  position:relative;overflow:hidden}
-.glass-nav::before{content:"";position:absolute;inset:0;background:
-  radial-gradient(80px 40px at 20% 0%,rgba(52,130,255,.3),transparent 70%),
-  radial-gradient(90px 50px at 80% 100%,rgba(127,176,255,.2),transparent 70%);pointer-events:none}
-.glass-nav span{display:flex;align-items:center;gap:7px;font:600 10px/1 var(--body);color:var(--muted);position:relative}
-.glass-nav span.on{color:var(--accent-ink)}
-.glass-nav svg{width:15px;height:15px}
-.glass-note{margin-top:14px;font-size:12.5px;color:var(--faint)}
-
-/* lyric demo */
-.lyric-demo{margin-top:20px;display:flex;flex-direction:column;gap:9px}
-.lyric-demo .l{font-size:14px;color:var(--faint);transition:color .3s}
-.lyric-demo .l.on{color:var(--ink);font-weight:600;text-shadow:0 0 18px rgba(52,130,255,.55)}
-.lyric-demo .l.next{color:var(--muted)}
-
-/* recap mini */
-.recap-mini{display:flex;gap:12px;margin-top:20px}
-.recap-mini .stat{flex:1;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-md);padding:14px}
-.recap-mini .stat b{display:block;font:600 21px/1 var(--display);letter-spacing:-.02em}
-.recap-mini .stat.hi{border-color:rgba(52,130,255,.3);background:var(--accent-soft)}
-.recap-mini .stat.hi b{color:var(--accent-ink)}
-.recap-mini .stat span{font-size:11px;color:var(--faint);display:block;margin-top:7px}
-
-/* ── widgets ─────────────────────────────────────── */
-.widgets-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-.wg{background:#0D1015;border:1px solid var(--line);border-radius:18px;padding:14px;
-  display:flex;flex-direction:column;gap:10px;min-height:132px;position:relative;overflow:hidden}
-.wg .wg-art{width:34px;height:34px;border-radius:9px;background:var(--surface-3);overflow:hidden;flex:none}
-.wg .wg-art img{width:100%;height:100%;object-fit:cover;opacity:.55}
-.wg .wg-top{display:flex;align-items:center;gap:10px}
-.wg .wg-lines{flex:1;min-width:0}
-.wg .bar{height:7px}
-.wg .bar.w45{height:6px;margin-top:5px}
-.wg .wg-ctl{display:flex;gap:11px;color:var(--muted);margin-top:auto}
-.wg .wg-ctl svg{width:14px;height:14px}
-.wg .wg-prog{height:3px;border-radius:var(--pill);background:#222A35;position:relative;margin-top:2px}
-.wg .wg-prog i{position:absolute;inset:0 auto 0 0;width:44%;background:var(--accent);border-radius:var(--pill)}
-.wg-name{font:600 10px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);text-align:center;margin-top:12px}
-.wg.tall{min-height:150px}
-@media(max-width:980px){.widgets-row{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:620px){.widgets-row{grid-template-columns:repeat(2,1fr)}}
-
-/* ── recap split ─────────────────────────────────── */
-.split{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
-@media(max-width:900px){.split{grid-template-columns:1fr;gap:44px}.split .phone{justify-self:center}}
-.story{width:270px;height:480px;border-radius:26px;overflow:hidden;position:relative;
-  background:linear-gradient(170deg,#16202E,#0D1117 60%);border:1px solid var(--line-2);
-  box-shadow:0 36px 80px -34px rgba(0,0,0,.9);padding:26px 22px;display:flex;flex-direction:column}
-.story .s-kicker{font:600 10px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--accent-ink)}
-.story h4{font:600 25px/1.2 var(--display);letter-spacing:-.02em;margin:14px 0 0}
-.story .s-big{font:700 52px/1 var(--display);letter-spacing:-.04em;margin-top:auto;color:var(--ink)}
-.story .s-big small{display:block;font:500 13px/1.4 var(--body);color:var(--muted);letter-spacing:0;margin-top:10px}
-.story .s-bars{display:flex;align-items:flex-end;gap:6px;height:64px;margin-top:22px}
-.story .s-bars i{flex:1;background:var(--accent);border-radius:4px 4px 2px 2px;opacity:.85}
-.story .s-foot{margin-top:20px;font:500 11px/1 var(--mono);color:var(--faint);display:flex;justify-content:space-between}
-.checklist{list-style:none;padding:0;margin:26px 0 0;display:flex;flex-direction:column;gap:15px}
-.checklist li{display:flex;gap:13px;font-size:15px;color:var(--muted);line-height:1.55}
-.checklist svg{width:19px;height:19px;flex:none;color:var(--accent);margin-top:2px}
-.checklist b{color:var(--ink);font-weight:600}
-
-/* ── download ────────────────────────────────────── */
-.download{border-block:1px solid var(--line);background:
-  radial-gradient(700px 300px at 50% -40%,rgba(52,130,255,.14),transparent 70%),var(--surface)}
-.dl-in{display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap}
-.dl-copy h2{font-size:clamp(26px,3.2vw,34px)}
-.dl-copy p{margin-top:14px;color:var(--muted);max-width:46ch}
-.dl-side{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
-.dl-facts{display:flex;gap:20px;font:500 12.5px/1 var(--mono);color:var(--faint);flex-wrap:wrap}
-.dl-note{font-size:12.5px;color:var(--faint);max-width:34ch;line-height:1.55}
-
-/* ── faq ─────────────────────────────────────────── */
-.faq{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
-.faq details{border-bottom:1px solid var(--line)}
-.faq summary{list-style:none;cursor:pointer;padding:22px 4px;display:flex;align-items:center;
-  justify-content:space-between;gap:20px;font:600 16.5px/1.4 var(--display);letter-spacing:-.01em}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary .chev{width:18px;height:18px;color:var(--faint);transition:transform .22s;flex:none}
-.faq details[open] summary .chev{transform:rotate(180deg)}
-.faq .a{padding:0 4px 24px;color:var(--muted);font-size:15px;max-width:70ch;line-height:1.7}
-.faq .a code{font:500 12.5px var(--mono);color:var(--accent-ink);background:var(--accent-soft);padding:2px 7px;border-radius:6px}
-
-/* ── footer ──────────────────────────────────────── */
-footer{border-top:1px solid var(--line);padding:40px 0 48px}
-.foot-in{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.foot-brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600}
-.foot-brand img{width:24px;height:24px;border-radius:7px}
-.foot-links{display:flex;gap:22px;font-size:13.5px;color:var(--muted)}
-.foot-links a:hover{color:var(--ink)}
-.foot-note{width:100%;margin-top:22px;font-size:12.5px;color:var(--faint);line-height:1.6}
-
-/* ── interaktif: progress bar, ticker, spotlight, galeri, lightbox ── */
-#prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;
-  background:linear-gradient(90deg,var(--accent),#7FB0FF)}
-
-.ticker{border-block:1px solid var(--line);background:var(--surface);overflow:hidden;padding:15px 0}
-.ticker-in{display:flex;width:max-content;animation:slide 34s linear infinite}
-.ticker-in span{font:600 12px/1 var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--faint);
-  display:inline-flex;align-items:center;gap:30px;padding-right:30px}
-.ticker-in span::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.7}
+/* ── ticker ── */
+.ticker{border-block:1px solid var(--line);overflow:hidden;padding:16px 0;background:var(--bg-soft)}
+.ticker-in{display:flex;width:max-content;animation:slide 40s linear infinite}
+.ticker-in span{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--faint);padding-right:44px;white-space:nowrap}
 @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-.cell{--mx:50%;--my:0%}
-.cell::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;
-  background:radial-gradient(360px circle at var(--mx) var(--my),rgba(52,130,255,.15),transparent 70%)}
-.cell:hover::after{opacity:1}
+/* ── section rhythm ── */
+.sec{padding:96px 0}
+.sec.dark{background:var(--bg)}
+.sec.light{--accent:#C2185B;--accent-soft:rgba(194,24,91,.12);
+  background:var(--paper);color:var(--paper-ink)}
+.sec.light .mono,.sec.light .kicker{color:var(--accent)}
+.sec.light .sec-head p{color:rgba(17,17,20,.72)}
+.sec.light .bullets li,.sec.light details .a{color:rgba(17,17,20,.72)}
+.sec-head{max-width:56ch;margin-bottom:44px}
+.kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.sec h2{font-size:clamp(30px,4vw,44px);line-height:1.1;letter-spacing:-1.3px;margin-top:14px}
+.sec-head p{margin-top:16px;font-size:18px;color:var(--muted);letter-spacing:-.4px}
+.sec.light .sec-head p{color:var(--paper-muted)}
 
-.shots-rail{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;
-  padding:10px 4px 6px;scrollbar-width:none;-ms-overflow-style:none}
-.shots-rail::-webkit-scrollbar{display:none}
-.shot{flex:0 0 auto;width:244px;scroll-snap-align:center;cursor:zoom-in;
-  transition:transform .4s cubic-bezier(.2,.7,.2,1),opacity .4s}
-.shot .frame{border-radius:26px;padding:8px;background:linear-gradient(160deg,#232A34,#12161C 55%);
-  border:1px solid rgba(255,255,255,.1);box-shadow:0 26px 60px -26px rgba(0,0,0,.9);
-  transform-style:preserve-3d;transition:box-shadow .3s,border-color .3s}
-.shot img{width:100%;border-radius:20px;display:block;background:#0B0E13}
-.shot .cap{margin-top:12px;font-size:12.5px;color:var(--muted);text-align:center;line-height:1.5}
-.shot .cap b{color:var(--ink);font-weight:600;display:block;margin-bottom:2px;font-size:13.5px}
-.shot:hover .frame,.shot.active .frame{border-color:rgba(52,130,255,.42);
-  box-shadow:0 34px 78px -28px rgba(52,130,255,.38)}
-.shot:focus-visible{outline:2px solid var(--accent);outline-offset:6px;border-radius:26px}
+/* ── TAMPILAN: tumpukan kartu gaya app switcher ── */
+.stage{position:relative;margin-top:8px}
+.stack{position:relative;height:min(70vh,540px);perspective:1400px;perspective-origin:50% 44%;
+  touch-action:pan-y;cursor:grab;user-select:none}
+.stack.dragging{cursor:grabbing}
+.card{position:absolute;top:0;left:50%;width:clamp(186px,24vw,244px);margin-left:-122px;
+  will-change:transform;transform-style:preserve-3d;
+  transition:transform .62s cubic-bezier(.22,.72,.2,1),opacity .45s}
+.card .fr{position:relative;border-radius:38px;padding:9px;background:linear-gradient(180deg,#1B1B20,#0A0A0D);
+  border:1px solid rgba(255,255,255,.15);box-shadow:0 46px 90px -38px rgba(0,0,0,1);
+  transition:box-shadow .4s,border-color .4s}
+.card .fr .sc{position:absolute;inset:9px;border-radius:29px;background:#07070A;opacity:0;
+  transition:opacity .45s;pointer-events:none}
+.card img{display:block;width:100%;height:auto;aspect-ratio:9/19.5;object-fit:cover;object-position:top center;
+  border-radius:29px;background:#000;pointer-events:none}
+.card.front .fr{border-color:rgba(255,255,255,.24);
+  box-shadow:0 54px 96px -36px rgba(0,0,0,1),0 0 0 1px rgba(255,255,255,.06)}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:8px;border-radius:38px}
+.stage-foot{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:26px;flex-wrap:wrap}
+.stage-cap{font-size:15.5px;color:var(--muted);max-width:60ch}
+.stage-cap b{color:var(--ink);font-weight:600}
+.stage-ctl{display:flex;align-items:center;gap:14px}
+.count{font-family:var(--mono);font-size:13px;letter-spacing:.1em;color:var(--faint);min-width:64px;text-align:right}
+.rbtn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;
+  transition:border-color .2s,background .2s,transform .2s}
+.rbtn:hover{border-color:rgba(255,255,255,.45);background:rgba(255,255,255,.05)}
+.rbtn:active{transform:scale(.93)}
+.rbtn svg{width:18px;height:18px}
+.hint{margin-top:10px;color:var(--faint);font-size:13px}
 
-.rail-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:8px}
-.rail-nav{display:flex;gap:10px}
-.rail-btn{width:42px;height:42px;border-radius:50%;background:var(--surface);border:1px solid var(--line-2);
-  color:var(--ink);display:grid;place-items:center;cursor:pointer;
-  transition:background .18s,border-color .18s,transform .18s}
-.rail-btn:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.28)}
-.rail-btn:active{transform:scale(.94)}
-.rail-hint{font-size:12.5px;color:var(--faint)}
+/* ── FITUR: index editorial, bukan kotak-kotak ── */
+.rows{border-top:1px solid var(--paper-line)}
+.row{display:grid;grid-template-columns:52px 1fr;gap:6px 20px;padding:22px 0;border-bottom:1px solid var(--paper-line);
+  position:relative;align-items:baseline}
+@media(min-width:760px){.row{grid-template-columns:64px 260px 1fr;align-items:center}}
+.row .n{font-family:var(--mono);font-size:12.5px;color:var(--accent);letter-spacing:.1em}
+.row h3{font-size:19px;letter-spacing:-.4px;font-weight:600}
+.row p{color:var(--paper-muted);font-size:15.5px;letter-spacing:-.2px}
+.row::after{content:"";position:absolute;left:0;bottom:-1px;height:1px;width:0;background:var(--accent);
+  transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.row:hover::after{width:100%}
+.row:hover .n{color:var(--accent)}
 
-.lb{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:24px;
-  background:rgba(5,7,10,.88);backdrop-filter:blur(14px);opacity:0;pointer-events:none;transition:opacity .25s}
+/* ── alur teknis ── */
+.flow{border-top:1px solid var(--line);margin-top:8px}
+.frow{display:grid;grid-template-columns:44px 1fr;gap:4px 18px;padding:26px 0;border-bottom:1px solid var(--line)}
+@media(min-width:820px){.frow{grid-template-columns:60px 190px 1fr;gap:20px;align-items:center}}
+.frow .fn{font-family:var(--mono);font-size:12.5px;color:var(--accent)}
+.frow h3{font-size:18px;letter-spacing:-.3px}
+.frow p{color:var(--muted);font-size:15.5px;letter-spacing:-.2px}
+
+/* ── widget ── */
+.wgrid{display:grid;gap:44px}
+@media(min-width:900px){.wgrid{grid-template-columns:1fr .9fr;align-items:center}}
+.wui{background:#0C0C0F;border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px 20px;color:var(--ink);
+  box-shadow:0 34px 70px -32px rgba(0,0,0,.9);max-width:360px}
+.wui .top{display:flex;gap:14px;align-items:center}
+.wui .art{width:52px;height:52px;border-radius:12px;background:linear-gradient(140deg,#3a2230,#191a20);flex:0 0 auto}
+.wui .t{font-size:14.5px;font-weight:600;letter-spacing:-.2px}
+.wui .s{font-size:12.5px;color:var(--faint);margin-top:2px}
+.wui .bar{height:3px;border-radius:2px;background:rgba(255,255,255,.14);margin:16px 0 8px}
+.wui .bar i{display:block;height:100%;width:38%;border-radius:2px;background:var(--accent)}
+.wui .time{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.wui .ctl{display:flex;justify-content:center;gap:22px;margin-top:14px;color:rgba(245,245,247,.85)}
+.wui .ctl svg{width:19px;height:19px}
+.wui .eq{display:flex;align-items:flex-end;gap:3px;height:22px;margin-left:auto}
+.wui .eq i{width:3px;background:rgba(245,245,247,.5);border-radius:2px;animation:eq 1.05s ease-in-out infinite}
+.wui .eq i:nth-child(1){height:30%;animation-delay:0s}
+.wui .eq i:nth-child(2){height:70%;animation-delay:.14s}
+.wui .eq i:nth-child(3){height:45%;animation-delay:.28s}
+.wui .eq i:nth-child(4){height:88%;animation-delay:.42s}
+@keyframes eq{50%{height:22%}}
+.wlist{border-top:1px solid var(--paper-line)}
+.wlist div{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:16px 0;
+  border-bottom:1px solid var(--paper-line)}
+.wlist b{font-weight:600;font-size:16px;letter-spacing:-.3px}
+.wlist span{font-family:var(--mono);font-size:12px;color:var(--paper-muted)}
+
+/* ── recap & impor: teks + screenshot asli ── */
+.split{display:grid;gap:48px;align-items:center}
+@media(min-width:900px){.split{grid-template-columns:.95fr 1.05fr}}
+.split.rev .shot-col{order:-1}
+@media(max-width:899px){.split.rev .shot-col{order:0}}
+.shot-col{display:flex;justify-content:center}
+.phone{width:clamp(212px,26vw,258px);border-radius:36px;padding:9px;
+  background:linear-gradient(180deg,#1B1B20,#0A0A0D);border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 48px 96px -40px rgba(0,0,0,1)}
+.phone img{display:block;width:100%;height:auto;aspect-ratio:9/19.5;object-fit:cover;object-position:top center;
+  border-radius:28px;background:#000}
+.sec.light .phone{background:linear-gradient(180deg,#25252B,#111114);border-color:rgba(0,0,0,.2)}
+.bullets{list-style:none;margin:30px 0 0;padding:0;display:grid;gap:18px}
+.bullets li{display:grid;grid-template-columns:22px 1fr;gap:14px;align-items:start;font-size:16.5px;
+  color:var(--muted);letter-spacing:-.2px}
+.sec.light .bullets li{color:var(--paper-muted)}
+.bullets b{color:var(--ink);font-weight:600}
+.sec.light .bullets b{color:var(--paper-ink)}
+.bullets i{width:20px;height:20px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;
+  font-size:11px;font-family:var(--mono);color:var(--accent);font-style:normal;margin-top:2px}
+.sec.light .bullets i{border-color:var(--paper-line)}
+
+/* ── unduh ── */
+.dl{display:grid;gap:14px;margin-top:36px}
+@media(min-width:760px){.dl{grid-template-columns:1fr 1fr}}
+.dl a{display:grid;gap:8px;padding:26px;border:1px solid var(--line);border-radius:16px;
+  transition:border-color .25s,background .25s,transform .25s cubic-bezier(.2,.7,.2,1)}
+.dl a:hover{border-color:rgba(226,58,110,.5);background:rgba(226,58,110,.06);transform:translateY(-3px)}
+.dl .h{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.dl b{font-size:19px;font-weight:600;letter-spacing:-.4px}
+.dl .sz{font-family:var(--mono);font-size:12px;color:var(--faint)}
+.dl p{color:var(--muted);font-size:15.5px;letter-spacing:-.2px}
+.dl .go{display:inline-flex;align-items:center;gap:8px;margin-top:6px;color:var(--accent-ink);font-size:14.5px}
+.dl svg{width:16px;height:16px}
+.sign{margin-top:22px;color:var(--faint);font-size:14px;display:flex;align-items:center;gap:10px}
+.sign svg{width:16px;height:16px;flex:0 0 auto}
+
+/* ── FAQ ── */
+.faq{border-top:1px solid var(--paper-line);margin-top:10px}
+details{border-bottom:1px solid var(--paper-line);padding:20px 0}
+summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  font-size:17.5px;font-weight:600;letter-spacing:-.35px}
+summary::-webkit-details-marker{display:none}
+summary svg{width:18px;height:18px;flex:0 0 auto;transition:transform .3s;color:var(--accent)}
+details[open] summary svg{transform:rotate(180deg)}
+details .a{margin-top:12px;color:var(--paper-muted);font-size:16px;max-width:70ch;letter-spacing:-.2px}
+details .a code{font-family:var(--mono);font-size:13.5px;background:rgba(17,17,20,.07);padding:2px 6px;border-radius:5px}
+
+/* ── footer ── */
+footer{background:var(--bg);border-top:1px solid var(--line);padding:52px 0 40px}
+.f-top{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:flex-start}
+.f-links{display:flex;flex-wrap:wrap;gap:8px 24px;color:var(--muted);font-size:14.5px}
+.f-links a:hover{color:var(--ink)}
+.f-note{margin-top:30px;color:var(--faint);font-size:13px;max-width:82ch;line-height:1.6}
+
+/* ── lightbox ── */
+.lb{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:22px;
+  background:rgba(4,4,6,.9);backdrop-filter:blur(16px);opacity:0;pointer-events:none;transition:opacity .25s}
 .lb.on{opacity:1;pointer-events:auto}
-.lb-fig{display:flex;flex-direction:column;align-items:center;gap:14px;
-  transform:scale(.94);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.lb-fig{display:flex;flex-direction:column;align-items:center;gap:14px;transform:scale(.95);
+  transition:transform .3s cubic-bezier(.2,.7,.2,1)}
 .lb.on .lb-fig{transform:none}
-.lb img{max-height:74vh;border-radius:20px;border:1px solid rgba(255,255,255,.13);
+.lb img{max-height:72vh;border-radius:22px;border:1px solid rgba(255,255,255,.14);
   box-shadow:0 40px 90px -30px rgba(0,0,0,.95)}
-.lb-cap{color:var(--muted);font-size:14px;text-align:center;max-width:54ch;line-height:1.55}
+.lb-cap{color:var(--muted);font-size:14.5px;text-align:center;max-width:54ch;line-height:1.55;letter-spacing:-.2px}
 .lb-cap b{color:var(--ink)}
-.lb-x{position:absolute;top:20px;right:22px;width:44px;height:44px;border-radius:50%;
-  background:var(--surface);border:1px solid var(--line-2);color:var(--ink);font-size:17px;cursor:pointer}
+.lb-x{position:absolute;top:20px;right:22px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line-2);
+  display:grid;place-items:center;font-size:16px}
+.lb-x:hover{border-color:rgba(255,255,255,.45)}
 .lb-btn{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:58px;border-radius:14px;
-  background:var(--surface);border:1px solid var(--line-2);color:var(--ink);cursor:pointer;font-size:17px}
-.lb-btn.p{left:18px}.lb-btn.n{right:18px}
-body.lock{overflow:hidden}
-@media(max-width:640px){.lb-btn{display:none}.shot{width:188px}}
+  border:1px solid var(--line-2);display:grid;place-items:center}
+.lb-btn:hover{border-color:rgba(255,255,255,.45)}
+.lb-btn svg{width:18px;height:18px}
+.lb-p{left:18px}.lb-n{right:18px}
+@media(max-width:640px){.lb-btn{display:none}}
 
-/* ── reveal (progressive: konten tetap terlihat bila JS/IO gagal) ── */
-.rv.in{animation:rvIn .6s ease both}
-@keyframes rvIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+/* ── mobile: kartu & kontrol disederhanakan ── */
+@media(max-width:820px){
+  .hero{padding:104px 0 52px}
+  .hero-grid{gap:34px}
+  .cta-row{display:grid;gap:10px}
+  .btn{justify-content:center}
+  .facts{gap:0;margin-top:26px;font-size:12px}
+  .facts span{flex:1 0 50%;padding:9px 0;border-left:0;border-top:1px solid var(--line)}
+  .facts span:nth-child(2){text-align:right;padding-right:0}
+  .facts span:first-child,.facts span:nth-child(2){border-top:0}
+  .dev.d1{display:none}
+  .deck{height:min(60vh,420px)}
+  .dev.d3{transform:translate3d(0,0,20px) scale(.92)}
+  .sec{padding:72px 0}
+  .stack{height:min(64vh,470px);perspective:1100px}
+  .stage{padding:0 10px}
+}
+
+/* ── reveal halus ── */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .rv.in{animation:none}
-  .eq i{animation:none}
-  *{transition-duration:.01ms!important}
+  .rv{opacity:1;transform:none;transition:none}
+  .ticker-in{animation:none}
+  .wui .eq i{animation:none}
+  .card,.dev{transition:none}
 }
 </style>
 </head>
 <body>
 <div id="prog" aria-hidden="true"></div>
 
-<!-- icon sprite -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13l11-6.5z"/></symbol>
-  <symbol id="i-pause" viewBox="0 0 24 24"><path fill="currentColor" d="M7 5h3.4v14H7zM13.6 5H17v14h-3.4z"/></symbol>
-  <symbol id="i-prev" viewBox="0 0 24 24"><path fill="currentColor" d="M7 6h2v12H7zM19 6v12l-9-6z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5"/><path d="M4 19h16"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15m0 0l-5.5-5.5M19 12l-5.5 5.5"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H5m0 0l5.5-5.5M5 12l5.5 5.5"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><path fill="currentColor" d="M7 6h2v12H7zm12 0v12l-9-6z"/></symbol>
   <symbol id="i-next" viewBox="0 0 24 24"><path fill="currentColor" d="M15 6h2v12h-2zM5 6v12l9-6z"/></symbol>
-  <symbol id="i-shuffle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></symbol>
-  <symbol id="i-repeat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></symbol>
-  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.2 1.5 4 3 5.5l7 7z"/></symbol>
-  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></symbol>
-  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
-  <symbol id="i-lib" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4v16M9 4v16M14 5l5 15"/></symbol>
-  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
-  <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></symbol>
-  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
-  <symbol id="i-android" viewBox="0 0 24 24" fill="currentColor"><path d="M6 9v8a1.5 1.5 0 0 0 1.5 1.5H8V21a1 1 0 0 0 2 0v-2.5h4V21a1 1 0 0 0 2 0v-2.5h.5A1.5 1.5 0 0 0 18 17V9zM4.5 9A1.5 1.5 0 0 0 3 10.5v5a1.5 1.5 0 0 0 3 0v-5A1.5 1.5 0 0 0 4.5 9m15 0A1.5 1.5 0 0 0 18 10.5v5a1.5 1.5 0 0 0 3 0v-5A1.5 1.5 0 0 0 19.5 9M15.5 3.6l1-1.7a.4.4 0 0 0-.7-.4l-1 1.8a6.7 6.7 0 0 0-5.6 0l-1-1.8a.4.4 0 1 0-.7.4l1 1.7A6.2 6.2 0 0 0 6 8h12a6.2 6.2 0 0 0-2.5-4.4M9.5 6.2a.7.7 0 1 1 0-1.4.7.7 0 0 1 0 1.4m5 0a.7.7 0 1 1 0-1.4.7.7 0 0 1 0 1.4"/></symbol>
-  <symbol id="i-github" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2"/></symbol>
-  <symbol id="i-note" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
-  <symbol id="i-lyric" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 11h10M4 16h13M4 21h7"/></symbol>
-  <symbol id="i-widget" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></symbol>
-  <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
-  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
-  <symbol id="i-signal" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17h2.5v4H3zM8 13h2.5v8H8zM13 9h2.5v12H13zM18 5h2.5v16H18z"/></symbol>
-  <symbol id="i-wifi" viewBox="0 0 24 24" fill="currentColor"><path d="M12 18.5a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2M12 13c-2 0-3.8.8-5.1 2.1l1.8 1.8A4.7 4.7 0 0 1 12 15.6c1.3 0 2.5.5 3.3 1.3l1.8-1.8A7.2 7.2 0 0 0 12 13m0-5.5c-3.5 0-6.7 1.4-9 3.7l1.8 1.8A10.2 10.2 0 0 1 12 10c2.8 0 5.4 1.1 7.2 3l1.8-1.8a12.7 12.7 0 0 0-9-3.7"/></symbol>
-  <symbol id="i-batt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="8" width="17" height="9" rx="2.2"/><path fill="currentColor" stroke="none" d="M4.2 10.2h10.5v4.6H4.2z"/><path fill="currentColor" stroke="none" d="M20.6 10.8h1.6v3.4h-1.6z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5h3v14H8zm5 0h3v14h-3z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
 </svg>
 
-<nav class="nav">
+<nav class="nav" id="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#top"><img src="assets/icon.png" alt="">Serenade</a>
-    <div class="nav-links">
+    <a class="brand" href="#top"><img src="assets/icon.png" alt="Ikon Serenade"><span>Serenade</span></a>
+    <div class="nav-links" id="navlinks">
       <a href="#tampilan">Tampilan</a>
       <a href="#fitur">Fitur</a>
       <a href="#widget">Widget</a>
@@ -398,588 +326,486 @@ body.lock{overflow:hidden}
       <a href="#impor">Impor</a>
       <a href="#tanya">Tanya</a>
     </div>
-    <a class="btn btn-primary btn-sm nav-cta" href="#unduh">
-      <svg><use href="#i-down"/></svg>Unduh APK
-    </a>
+    <a class="nav-cta" href="#unduh">Unduh APK</a>
   </div>
 </nav>
 
-<header class="hero" id="top">
+<main id="top">
+
+<header class="hero">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow"><span class="dot"></span>Music player Android · v1.12</span>
-      <h1><span class="l1">Seluruh katalog musik.</span><em>Tanpa akun, tanpa iklan.</em></h1>
-      <p class="hero-sub">Serenade memutar katalog YouTube Music dan NetEase Cloud Music langsung di ponsel Anda — navbar liquid glass, lirik yang mengikuti lagu, unduhan offline, dan recap yang bisa dibagikan.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="https://github.com/hrihq/serenade-site/releases/latest/download/serenade-modern.apk">
-          <svg><use href="#i-down"/></svg>Unduh untuk Android 13+
-        </a>
-        <a class="btn btn-ghost" href="https://github.com/hrihq/serenade-site/releases/latest/download/serenade-legacy.apk">
-          <svg><use href="#i-down"/></svg>Android 10–12
-        </a>
+      <div class="tagline"><i></i>Music player Android · v1.12</div>
+      <h1>Seluruh katalog musik.<br><em>Tanpa akun, tanpa iklan.</em></h1>
+      <p class="lede">Serenade memutar katalog YouTube Music dan NetEase Cloud Music langsung di ponsel — navbar liquid glass, lirik yang mengikuti lagu, unduhan offline, dan recap yang bisa dibagikan.</p>
+      <div class="cta-row">
+        <a class="btn btn-fill" href="#unduh"><svg><use href="#i-dl"/></svg>Unduh untuk Android 13+</a>
+        <a class="btn btn-line" href="#unduh">Android 10–12</a>
       </div>
-      <div class="hero-meta">
-        <span><svg><use href="#i-android"/></svg>Android 10+</span>
-        <span><svg><use href="#i-lock"/></svg>Tanpa login</span>
-        <span><svg><use href="#i-note"/></svg>Dua APK terpisah</span>
+      <div class="facts">
+        <span>Android 13+</span><span>Android 10–12</span><span>Tanpa login</span><span>Tanda tangan tetap</span>
       </div>
     </div>
-
-    <div class="hero-phone">
-      <div class="phone" role="img" aria-label="Ilustrasi antarmuka pemutar Serenade">
-        <div class="phone-screen">
-          <div class="phone-notch"></div>
-          <div class="p-status"><span>21:34</span>
-            <span class="sys"><svg><use href="#i-signal"/></svg><svg><use href="#i-wifi"/></svg><svg><use href="#i-batt"/></svg></span>
-          </div>
-          <div class="p-top">
-            <svg style="width:18px;height:18px"><use href="#i-chev"/></svg>
-            <span class="lbl">Sedang diputar</span>
-            <svg style="width:18px;height:18px;color:var(--accent)"><use href="#i-heart"/></svg>
-          </div>
-          <div class="p-art"><img src="assets/icon.png" alt=""><span class="glow"></span></div>
-          <div class="p-meta">
-            <div class="p-title">Nuit d&rsquo;&Eacute;toiles</div>
-            <div class="p-artist">Claude Debussy</div>
-          </div>
-          <div class="p-progress">
-            <div class="p-track"><span class="p-fill"></span><span class="p-knob"></span></div>
-            <div class="p-times"><span>1:24</span><span>3:41</span></div>
-          </div>
-          <div class="p-controls">
-            <svg><use href="#i-shuffle"/></svg>
-            <svg><use href="#i-prev"/></svg>
-            <span class="p-play"><svg style="margin-left:0"><use href="#i-pause"/></svg></span>
-            <svg><use href="#i-next"/></svg>
-            <svg><use href="#i-repeat"/></svg>
-          </div>
-          <div class="p-lyrics">
-            <div class="ln">Nuit d&rsquo;&eacute;toiles, sous tes voiles,</div>
-            <div class="ln on">Nuit d&rsquo;harmonie et d&rsquo;amour,</div>
-            <div class="ln">O&ugrave; le r&ecirc;ve et la tendresse&hellip;</div>
-          </div>
-          <div class="p-nav">
-            <span class="tab"><svg><use href="#i-home"/></svg>Beranda</span>
-            <span class="tab"><svg><use href="#i-search"/></svg>Cari</span>
-            <span class="tab on"><svg><use href="#i-lib"/></svg>Library</span>
-          </div>
-        </div>
-      </div>
+    <div class="deck" id="deck" aria-label="Pratinjau aplikasi">
+      <div class="dev d1"><img src="assets/shots/03-library-fitur.jpg" alt="Library" width="576" height="1280"></div>
+      <div class="dev d3"><img src="assets/shots/01-beranda.jpg" alt="Beranda Serenade" width="576" height="1280"></div>
     </div>
   </div>
 </header>
 
-<div class="pipeline">
-  <div class="wrap pipe-in">
-    <div class="pipe-step rv">
-      <span class="n">01 · KATALOG</span>
-      <h3>InnerTube</h3>
-      <p>Pencarian, beranda, playlist, dan radio dari <code>WEB_REMIX</code> — tanpa API key.</p>
-    </div>
-    <div class="pipe-step rv">
-      <span class="n">02 · STREAM</span>
-      <h3>NewPipeExtractor</h3>
-      <p>URL audio itag 140/251 di-resolve dari base.js asli, bukan cipher yang diblokir.</p>
-    </div>
-    <div class="pipe-step rv">
-      <span class="n">03 · SUMBER KEDUA</span>
-      <h3>NetEase FLAC</h3>
-      <p>Jalur tambahan untuk lagu lossless — MP3 320k tanpa akun, FLAC bila memakai cookie akun VIP.</p>
-    </div>
-    <div class="pipe-step rv">
-      <span class="n">04 · PUTAR</span>
-      <h3>Media3</h3>
-      <p>ExoPlayer + MediaSessionService: notifikasi media, lockscreen, Bluetooth, audio focus, dan unduhan paralel di latar belakang.</p>
-    </div>
-  </div>
-</div>
-
 <div class="ticker" aria-hidden="true">
   <div class="ticker-in">
-    <span>Lirik sinkron</span><span>Unduhan offline</span><span>Recap Wrapped</span><span>Widget 5 ukuran</span>
-    <span>Smart queue</span><span>Daily Mix</span><span>Mood discovery</span><span>Equalizer</span>
-    <span>Impor playlist</span><span>Tab Story</span><span>FLAC &amp; hi-res</span><span>Lagu lokal</span>
-    <span>Lirik sinkron</span><span>Unduhan offline</span><span>Recap Wrapped</span><span>Widget 5 ukuran</span>
-    <span>Smart queue</span><span>Daily Mix</span><span>Mood discovery</span><span>Equalizer</span>
-    <span>Impor playlist</span><span>Tab Story</span><span>FLAC &amp; hi-res</span><span>Lagu lokal</span>
+    <span>v1.12 · code 16</span><span>serenade-modern.apk · 21,2 MB · minSdk 33</span><span>serenade-legacy.apk · 21,4 MB · minSdk 29</span><span>NewPipeExtractor 0.27.1</span><span>Media3 1.8.0</span><span>Rhino 1.8.1</span><span>lrclib.net</span><span>miuix 0.9.4</span><span>backdrop 2.0.1</span><span>compileSdk 37</span><span>tanda tangan tetap</span><span>tanpa akun</span>
+    <span>v1.12 · code 16</span><span>serenade-modern.apk · 21,2 MB · minSdk 33</span><span>serenade-legacy.apk · 21,4 MB · minSdk 29</span><span>NewPipeExtractor 0.27.1</span><span>Media3 1.8.0</span><span>Rhino 1.8.1</span><span>lrclib.net</span><span>miuix 0.9.4</span><span>backdrop 2.0.1</span><span>compileSdk 37</span><span>tanda tangan tetap</span><span>tanpa akun</span>
   </div>
 </div>
 
-<section id="tampilan" style="padding-top:64px">
+<section class="sec dark" id="tampilan">
   <div class="wrap">
     <div class="sec-head rv">
       <div class="kicker">Tampilan</div>
-      <h2>Lihat langsung isinya.</h2>
-      <p>Sepuluh layar dari aplikasi — geser untuk menjelajah, ketuk untuk memperbesar.</p>
+      <h2>Sepuluh layar, satu tumpukan.</h2>
+      <p>Geser kartu seperti daftar aplikasi terakhir di ponsel. Ketuk kartu terdepan untuk melihat ukuran penuh.</p>
     </div>
-
-    <div class="rail-head rv">
-      <span class="rail-hint">Geser atau gunakan tombol ← →</span>
-      <div class="rail-nav">
-        <button class="rail-btn" id="railPrev" aria-label="Sebelumnya">&#8592;</button>
-        <button class="rail-btn" id="railNext" aria-label="Berikutnya">&#8594;</button>
+    <div class="stage rv">
+      <div class="stack" id="stack" role="list" tabindex="0" aria-label="Galeri layar Serenade">
+        <figure class="card" data-src="assets/shots/01-beranda.jpg" data-cap="Beranda personal: sapaan, chip mood, dan Daily Mix yang dibangun ulang tiap hari dari lagu yang Anda putar.">
+          <div class="fr"><img src="assets/shots/01-beranda.jpg" alt="Beranda" width="576" height="1280"></div>
+        </figure>
+        <figure class="card" data-src="assets/shots/02-library-riwayat.jpg" data-cap="Riwayat putar lengkap — artwork, artis, durasi, tombol putar dan menu per lagu.">
+          <div class="fr"><img src="assets/shots/02-library-riwayat.jpg" alt="Riwayat putar" width="576" height="1280"></div>
+        </figure>
+        <figure class="card" data-src="assets/shots/03-library-fitur.jpg" data-cap="Library: playlist, favorit, pintasan recap, impor, lagu lokal, dan sumber FLAC dalam satu layar.">
+          <div class="fr"><img src="assets/shots/03-library-fitur.jpg" alt="Library" width="576" height="1280"></div>
+        </figure>
+        <figure class="card" data-src="assets/shots/04-impor-playlist.jpg" data-cap="Impor playlist dari Spotify, YouTube Music, atau Apple Music — tempel tautan, tiap lagu dicocokkan ke katalog.">
+          <div class="fr"><img src="assets/shots/04-impor-playlist.jpg" alt="Impor playlist" width="576" height="1280"></div>
+        </figure>
+        <figure class="card" data-src="assets/shots/05-netease-flac.jpg" data-cap="Sumber kedua: pencarian NetEase untuk lagu FLAC dan hi-res, aktif penuh dengan akun VIP.">
+          <div class="fr"><img src="assets/shots/05-netease-flac.jpg" alt="Pencarian FLAC" width="576" height="1280"></div>
+        </figure>
+        <figure class="card" data-src="assets/shots/06-lagu-lokal.jpg" data-cap="Lagu di perangkat ikut dipindai — FLAC, MP3, M4A, OGG — dan diputar dalam antrean yang sama.">
+          <div class="fr"><img src="assets/shots/06-lagu-lokal.jpg" alt="Lagu lokal" width="576" height="1280"></div>
+        </figure>
+        <figure class="card" data-src="assets/shots/07-tema-audio.jpg" data-cap="Mode gelap atau terang, warna aksen bebas, background sendiri, plus equalizer lima band dan virtualizer.">
+          <div class="fr"><img src="assets/shots/07-tema-audio.jpg" alt="Tampilan dan audio" width="576" height="1280"></div>
+        </figure>
+        <figure class="card" data-src="assets/shots/08-pengaturan-offline.jpg" data-cap="Kontrol offline: cache otomatis, daftar unduhan berikut ukurannya, dan hapus semua dalam satu sentuhan.">
+          <div class="fr"><img src="assets/shots/08-pengaturan-offline.jpg" alt="Pengaturan offline" width="576" height="1280"></div>
+        </figure>
+        <figure class="card" data-src="assets/shots/09-story.jpg" data-cap="Tab Story: tempel foto, tambahkan lagu, atur posisi kartu — orang di foto tampil di depan kartu.">
+          <div class="fr"><img src="assets/shots/09-story.jpg" alt="Tab Story" width="576" height="1280"></div>
+        </figure>
+        <figure class="card" data-src="assets/shots/10-recap.jpg" data-cap="Recap bulanan, tahunan, atau sepanjang waktu — siap diputar sebagai story atau dibagikan sebagai gambar.">
+          <div class="fr"><img src="assets/shots/10-recap.jpg" alt="Recap" width="576" height="1280"></div>
+        </figure>
       </div>
-    </div>
-
-    <div class="shots-rail rv" id="rail" role="list">
-      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/01-beranda.jpg" data-cap="Beranda personal dengan sapaan, chip mood, dan Daily Mix yang berganti tiap hari.">
-        <span class="frame"><img src="assets/shots/01-beranda.jpg" alt="Layar Beranda Serenade" loading="lazy" width="576" height="1280"></span>
-        <figcaption class="cap"><b>Beranda</b>Mood, Daily Mix, personal</figcaption>
-      </figure>
-      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/02-library-riwayat.jpg" data-cap="Riwayat putar lengkap dengan artwork, artis, durasi, dan tombol putar per lagu.">
-        <span class="frame"><img src="assets/shots/02-library-riwayat.jpg" alt="Daftar riwayat putar" loading="lazy" width="576" height="1280"></span>
-        <figcaption class="cap"><b>Riwayat</b>Terakhir diputar</figcaption>
-      </figure>
-      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/03-library-fitur.jpg" data-cap="Library: recap, impor playlist, lagu lokal, dan NetEase FLAC dalam satu tempat.">
-        <span class="frame"><img src="assets/shots/03-library-fitur.jpg" alt="Kartu fitur di Library" loading="lazy" width="576" height="1280"></span>
-        <figcaption class="cap"><b>Library</b>Playlist &amp; pintasan fitur</figcaption>
-      </figure>
-      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/04-impor-playlist.jpg" data-cap="Impor playlist dari aplikasi lain — tempel tautan, tiap lagu dicocokkan ke katalog.">
-        <span class="frame"><img src="assets/shots/04-impor-playlist.jpg" alt="Layar impor playlist" loading="lazy" width="576" height="1280"></span>
-        <figcaption class="cap"><b>Impor</b>Dari aplikasi lain</figcaption>
-      </figure>
-      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/05-netease-flac.jpg" data-cap="Pencarian sumber kedua: FLAC dan hi-res, aktif penuh dengan akun VIP.">
-        <span class="frame"><img src="assets/shots/05-netease-flac.jpg" alt="Layar pencarian NetEase FLAC" loading="lazy" width="576" height="1280"></span>
-        <figcaption class="cap"><b>Sumber kedua</b>FLAC &amp; hi-res</figcaption>
-      </figure>
-      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/06-lagu-lokal.jpg" data-cap="Lagu di perangkat ikut dipindai — FLAC, MP3, M4A, OGG — lalu diputar dalam antrean yang sama.">
-        <span class="frame"><img src="assets/shots/06-lagu-lokal.jpg" alt="Daftar lagu lokal" loading="lazy" width="576" height="1280"></span>
-        <figcaption class="cap"><b>Lagu lokal</b>FLAC dari perangkat</figcaption>
-      </figure>
-      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/07-tema-audio.jpg" data-cap="Tema gelap/terang, warna aksen bebas, background sendiri, plus equalizer lima band.">
-        <span class="frame"><img src="assets/shots/07-tema-audio.jpg" alt="Pengaturan tampilan dan audio" loading="lazy" width="576" height="1280"></span>
-        <figcaption class="cap"><b>Tampilan &amp; audio</b>Aksen bebas, equalizer</figcaption>
-      </figure>
-      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/08-pengaturan-offline.jpg" data-cap="Kontrol offline: cache otomatis, ukuran unduhan, dan hapus semua dalam satu sentuhan.">
-        <span class="frame"><img src="assets/shots/08-pengaturan-offline.jpg" alt="Pengaturan penyimpanan offline" loading="lazy" width="576" height="1280"></span>
-        <figcaption class="cap"><b>Offline</b>Cache &amp; unduhan</figcaption>
-      </figure>
-      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/09-story.jpg" data-cap="Tab Story: pilih foto, susun kartu musik di atasnya, lalu ekspor 1080×1920.">
-        <span class="frame"><img src="assets/shots/09-story.jpg" alt="Tab Story" loading="lazy" width="576" height="1280"></span>
-        <figcaption class="cap"><b>Story</b>Kartu musik di foto</figcaption>
-      </figure>
-      <figure class="shot" role="listitem" tabindex="0" data-src="assets/shots/10-recap.jpg" data-cap="Recap: periode bulan/tahun/semua, tombol putar story dan bagikan ke Instagram atau WhatsApp.">
-        <span class="frame"><img src="assets/shots/10-recap.jpg" alt="Layar Recap" loading="lazy" width="576" height="1280"></span>
-        <figcaption class="cap"><b>Recap</b>Statistik &amp; bagikan</figcaption>
-      </figure>
+      <div class="stage-foot">
+        <div class="stage-cap" id="cap"></div>
+        <div class="stage-ctl">
+          <span class="count" id="count">01 / 10</span>
+          <button class="rbtn" id="prev" aria-label="Kartu sebelumnya"><svg><use href="#i-left"/></svg></button>
+          <button class="rbtn" id="next" aria-label="Kartu berikutnya"><svg><use href="#i-right"/></svg></button>
+        </div>
+      </div>
+      <p class="hint">Geser kartu, gulir, atau pakai tombol panah. Klik kartu terdepan untuk memperbesar.</p>
     </div>
   </div>
 </section>
 
-<section id="fitur">
+<section class="sec light" id="fitur">
   <div class="wrap">
     <div class="sec-head rv">
       <div class="kicker">Fitur</div>
       <h2>Dibangun untuk dipakai tiap hari, bukan dipamerkan.</h2>
-      <p>Antarmuka miuix dengan blur dan refraksi asli, bukan sekadar kartu bundar.</p>
+      <p>Antarmuka miuix dengan blur dan refraksi asli, pustaka lokal, dan aliran musik yang berhenti kalau Anda berhenti mendengarkan.</p>
     </div>
-
-    <div class="bento">
-      <article class="cell c-hero rv">
-        <span class="tag">Antarmuka</span>
-        <h3>Liquid glass yang benar-benar kaca</h3>
-        <p>Navbar dan mini player mengambil sampel lapisan di belakangnya — blur, refraksi lens, dan slider jelly yang bisa digeser. Bukan tempelan transparan.</p>
-        <div class="glass-demo">
-          <div class="glass-bar">
-            <span class="art"><img src="assets/icon.png" alt=""></span>
-            <span class="txt">
-              <span class="t">Nuit d&rsquo;&Eacute;toiles</span>
-              <span class="a">Claude Debussy</span>
-              <span class="pr"><i></i></span>
-            </span>
-            <span class="ctl"><svg><use href="#i-prev"/></svg><svg><use href="#i-pause"/></svg><svg><use href="#i-next"/></svg></span>
-          </div>
-          <div class="glass-nav" aria-hidden="true">
-            <span><svg><use href="#i-home"/></svg>Beranda</span>
-            <span><svg><use href="#i-search"/></svg>Cari</span>
-            <span class="on"><svg><use href="#i-lib"/></svg>Library</span>
-          </div>
-          <p class="glass-note">Mini player dan navbar mengambil sampel lapisan di belakangnya — blur dan refraksi lens asli.</p>
-        </div>
-      </article>
-
-      <article class="cell c-a rv">
-        <span class="tag">Lirik</span>
-        <h3>Lirik yang mengikuti lagu</h3>
-        <p>Synced dari lrclib.net, baris aktif menyala dengan fade dan glow — bukan teks statis.</p>
-        <div class="lyric-demo" aria-hidden="true">
-          <span class="l">baris sebelumnya memudar</span>
-          <span class="l on">baris yang sedang dinyanyikan</span>
-          <span class="l next">baris berikutnya menunggu</span>
-        </div>
-      </article>
-
-      <article class="cell c-b rv">
-        <span class="tag">Library</span>
-        <h3>Favorit, riwayat, dan lagu offline</h3>
-        <p>Semua tersimpan lokal sebagai JSON. Lagu yang sering diputar ikut di-cache otomatis, dan unduhan manual bersifat permanen.</p>
-        <div class="recap-mini">
-          <div class="stat"><b>4</b><span>tab utama</span></div>
-          <div class="stat hi"><b>0</b><span>akun dibutuhkan</span></div>
-          <div class="stat"><b>5</b><span>varian widget</span></div>
-        </div>
-      </article>
-
-      <article class="cell c-wide rv">
-        <span class="tag">Playback</span>
-        <h3>Antrian pintar, radio, dan kontrol di mana-mana</h3>
-        <p>Shuffle, repeat, antrian penuh, dan smart queue: saat antrean habis, Serenade melanjutkan dengan radio lagu terakhir sambil menyelipkan lagu dari artis favorit Anda. Kontrol lockscreen dan Bluetooth tersambung langsung ke engine — satu jalur notifikasi, tanpa dobel atau stuck.</p>
-      </article>
-
-      <article class="cell c-d rv">
-        <span class="tag">Sumber kedua</span>
-        <h3>NetEase Cloud Music</h3>
-        <p>Untuk lagu yang tersedia dalam kualitas tinggi: MP3 320 kbps langsung jalan, FLAC aktif bila Anda menempelkan cookie akun VIP. Cari, putar, favoritkan, dan unduh seperti lagu lain.</p>
-      </article>
-
-      <article class="cell c-e rv">
-        <span class="tag">Offline</span>
-        <h3>Unduh sekali, dengar kapan saja</h3>
-        <p>Tiga unduhan berjalan paralel di layanan latar depan — tetap lanjut walau aplikasi ditutup atau layar mati, dan bisa dilanjutkan dari posisi terakhir bila koneksi putus. File lokal selalu menang atas streaming saat memutar.</p>
-      </article>
-
-      <article class="cell c-d rv">
-        <span class="tag">Story</span>
-        <h3>Kartu musik bertingkat</h3>
-        <p>Pilih foto, tambahkan 3–5 lagu, atur posisi kartunya. Orang di foto tampil <b>di depan</b> kartu berkat pemisahan kedalaman, lalu seluruh komposisi diekspor 1080×1920.</p>
-      </article>
-
-      <article class="cell c-e rv">
-        <span class="tag">Suara</span>
-        <h3>Equalizer, bass boost, virtualizer</h3>
-        <p>Efek audio sistem terikat langsung ke sesi pemutar, dengan preset dan slider per band. Tersimpan di perangkat, dan tetap aman bila perangkat tidak mendukung salah satu efek.</p>
-      </article>
+    <div class="rows rv">
+      <div class="row"><span class="n">01</span><h3>Liquid glass yang benar-benar kaca</h3><p>Navbar dan mini player mengambil sampel lapisan di belakangnya — blur, refraksi lens, slider jelly yang bisa digeser.</p></div>
+      <div class="row"><span class="n">02</span><h3>Lirik yang mengikuti lagu</h3><p>Lirik sinkron dari lrclib.net; baris aktif membesar dengan glow lembut dan bisa diketuk untuk melompat.</p></div>
+      <div class="row"><span class="n">03</span><h3>Pustaka milik Anda, di ponsel</h3><p>Favorit, riwayat, dan playlist disimpan lokal sebagai JSON. Tanpa akun, tanpa sinkronisasi ke server orang lain.</p></div>
+      <div class="row"><span class="n">04</span><h3>Antrian pintar dan radio</h3><p>Shuffle, repeat, dan saat antrean habis Serenade melanjutkan dengan radio lagu terakhir sambil menyelipkan artis favorit.</p></div>
+      <div class="row"><span class="n">05</span><h3>Sumber kedua untuk FLAC</h3><p>NetEase Cloud Music: MP3 320 kbps langsung jalan, kualitas lossless aktif bila Anda menempelkan cookie akun VIP.</p></div>
+      <div class="row"><span class="n">06</span><h3>Unduh sekali, dengar kapan saja</h3><p>Tiga unduhan paralel di layanan latar depan — lanjut walau aplikasi ditutup, bisa dilanjutkan dari posisi terakhir.</p></div>
+      <div class="row"><span class="n">07</span><h3>Pindah tanpa kehilangan</h3><p>Impor playlist dari Spotify, YouTube Music, atau Apple Music; tiap lagu dicocokkan lalu disimpan sebagai playlist lokal.</p></div>
+      <div class="row"><span class="n">08</span><h3>Recap dan story</h3><p>Statistik bulanan atau tahunan dari menit yang benar-benar Anda dengar, siap diekspor 1080×1920.</p></div>
+      <div class="row"><span class="n">09</span><h3>Widget lima ukuran</h3><p>Satu mesin state untuk Small, Medium, Wide, Compact, dan Now Playing — sinkron real-time dengan pemutaran.</p></div>
+      <div class="row"><span class="n">10</span><h3>Equalizer dan virtualizer</h3><p>Lima band plus preset, bass boost, dan efek surround, tersimpan bersama pengaturan tampilan Anda.</p></div>
     </div>
   </div>
 </section>
 
-<section id="widget" style="padding-top:20px">
+<section class="sec dark" id="alur">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kicker">Cara kerjanya</div>
+      <h2>Empat langkah, tanpa server rahasia.</h2>
+      <p>Semuanya dibaca langsung dari layanan publik di perangkat Anda.</p>
+    </div>
+    <div class="flow rv">
+      <div class="frow"><span class="fn">01</span><h3>Katalog · InnerTube</h3><p>Pencarian, beranda, playlist, dan radio dari klien <code class="mono">WEB_REMIX</code> — tanpa API key.</p></div>
+      <div class="frow"><span class="fn">02</span><h3>Stream · NewPipeExtractor</h3><p>URL audio itag 140/251 di-resolve dari base.js asli lewat Rhino, bukan cipher yang diblokir.</p></div>
+      <div class="frow"><span class="fn">03</span><h3>Sumber kedua · NetEase FLAC</h3><p>Jalur tambahan untuk lossless: MP3 320k tanpa akun, FLAC bila memakai cookie VIP.</p></div>
+      <div class="frow"><span class="fn">04</span><h3>Putar · Media3</h3><p>ExoPlayer + MediaSessionService: notifikasi media, lockscreen, Bluetooth, audio focus, unduhan latar belakang.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec light" id="widget">
   <div class="wrap">
     <div class="sec-head rv">
       <div class="kicker">Widget</div>
       <h2>Lima ukuran, satu engine.</h2>
-      <p>Monochrome gelap dengan artwork sebagai aksen. Progress dan waktu berjalan tiap detik saat memutar, dan hanya aktif bila widget terpasang.</p>
+      <p>Monochrome gelap dengan artwork sebagai aksen. Progress berjalan tiap detik saat memutar, dan hanya aktif bila widget terpasang.</p>
     </div>
-    <div class="widgets-row rv">
-      <div>
-        <div class="wg">
-          <div class="wg-top"><span class="wg-art"><img src="assets/icon.png" alt=""></span></div>
-          <div class="wg-lines"><div class="bar w70"></div><div class="bar w45"></div></div>
-          <div class="wg-ctl"><svg><use href="#i-prev"/></svg><svg><use href="#i-play"/></svg><svg><use href="#i-next"/></svg></div>
+    <div class="wgrid rv">
+      <div class="wui" aria-hidden="true">
+        <div class="top">
+          <span class="art"></span>
+          <div>
+            <div class="t">Sisa Rasa</div>
+            <div class="s">Mahalini</div>
+          </div>
+          <span class="eq"><i></i><i></i><i></i><i></i></span>
         </div>
-        <div class="wg-name">Small 2×2</div>
+        <div class="bar"><i></i></div>
+        <div class="time"><span>1:38</span><span>4:25</span></div>
+        <div class="ctl">
+          <svg><use href="#i-prev"/></svg><svg><use href="#i-pause"/></svg><svg><use href="#i-next"/></svg>
+        </div>
       </div>
-      <div>
-        <div class="wg">
-          <div class="wg-top"><span class="wg-art"><img src="assets/icon.png" alt=""></span>
-            <span class="wg-lines"><span class="bar w70"></span><span class="bar w45"></span></span></div>
-          <div class="wg-prog"><i></i></div>
-          <div class="wg-ctl"><svg><use href="#i-prev"/></svg><svg><use href="#i-play"/></svg><svg><use href="#i-next"/></svg></div>
-        </div>
-        <div class="wg-name">Medium 4×1</div>
-      </div>
-      <div>
-        <div class="wg tall">
-          <div class="wg-top"><span class="wg-art"><img src="assets/icon.png" alt=""></span>
-            <span class="wg-lines"><span class="bar w70"></span><span class="bar w45"></span></span></div>
-          <div class="wg-prog"><i></i></div>
-          <div class="wg-ctl"><svg><use href="#i-shuffle"/></svg><svg><use href="#i-prev"/></svg><svg><use href="#i-play"/></svg><svg><use href="#i-next"/></svg><svg><use href="#i-repeat"/></svg></div>
-        </div>
-        <div class="wg-name">Wide 4×2</div>
-      </div>
-      <div>
-        <div class="wg">
-          <div class="wg-top"><span class="wg-art"><img src="assets/icon.png" alt=""></span>
-            <span class="wg-lines"><span class="bar w70"></span></span>
-            <svg style="width:16px;height:16px;color:var(--accent)"><use href="#i-play"/></svg></div>
-          <div class="wg-prog"><i></i></div>
-        </div>
-        <div class="wg-name">Compact 4×1</div>
-      </div>
-      <div>
-        <div class="wg tall">
-          <div class="wg-top"><span class="wg-art"><img src="assets/icon.png" alt=""></span>
-            <span class="wg-lines"><span class="bar w70"></span><span class="bar w45"></span></span></div>
-          <div class="wg-prog"><i></i></div>
-          <div class="wg-ctl"><svg><use href="#i-prev"/></svg><svg><use href="#i-play"/></svg><svg><use href="#i-next"/></svg><svg><use href="#i-heart"/></svg></div>
-        </div>
-        <div class="wg-name">Now Playing 5×2</div>
+      <div class="wlist">
+        <div><b>Small</b><span>2×2</span></div>
+        <div><b>Medium</b><span>4×1 · progress + waktu</span></div>
+        <div><b>Wide</b><span>4×2 · artwork besar</span></div>
+        <div><b>Compact</b><span>4×1 · pill</span></div>
+        <div><b>Now Playing</b><span>5×2 · horizontal</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="recap">
-  <div class="wrap split">
+<section class="sec dark" id="recap">
+  <div class="wrap split rev">
+    <div class="shot-col rv"><div class="phone"><img src="assets/shots/10-recap.jpg" alt="Layar recap" width="576" height="1280"></div></div>
     <div class="rv">
-      <div class="story" role="img" aria-label="Ilustrasi recap story Serenade">
-        <span class="s-kicker">Recap · Bulan ini</span>
-        <h4>Anda mendengarkan lebih banyak dari biasanya.</h4>
-        <div class="s-bars" aria-hidden="true">
-          <i style="height:34%"></i><i style="height:58%"></i><i style="height:42%"></i>
-          <i style="height:76%"></i><i style="height:64%"></i><i style="height:92%"></i>
-        </div>
-        <div class="s-big">1.284<small>menit diputar bulan ini</small></div>
-        <div class="s-foot"><span>serenade</span><span>01 / 05</span></div>
-      </div>
-    </div>
-    <div class="rv">
-      <div class="sec-head" style="margin-bottom:0">
-        <div class="kicker">Recap</div>
-        <h2>Statistik yang enak dilihat, lalu dibagikan.</h2>
-        <p>Top artis, top lagu, total menit, dan grafik bulanan atau tahunan — dihitung dari riwayat putar Anda sendiri.</p>
-      </div>
-      <ul class="checklist">
-        <li><svg><use href="#i-check"/></svg><span><b>Recap story</b> — tiap slide lagu teratas benar-benar memutar lagunya, mulai dari bagian tengah.</span></li>
-        <li><svg><use href="#i-check"/></svg><span><b>Bagikan sebagai gambar</b> 1080×1920 bergaya Wrapped, siap untuk Instagram Story atau status WhatsApp.</span></li>
-        <li><svg><use href="#i-check"/></svg><span><b>Menit yang nyata</b> — dihitung dari durasi pemutaran sungguhan, bukan perkiraan jumlah lagu.</span></li>
-        <li><svg><use href="#i-check"/></svg><span><b>Beranda personal</b> — rak “Sering Anda putar”, “Karena suka {artis}”, dan Daily Mix yang berganti tiap hari.</span></li>
+      <div class="kicker">Recap</div>
+      <h2 style="margin-top:14px">Statistik yang enak dilihat, lalu dibagikan.</h2>
+      <ul class="bullets">
+        <li><i>1</i><span><b>Top artis, top lagu, total menit</b> untuk bulan ini, tahun ini, atau sepanjang waktu.</span></li>
+        <li><i>2</i><span><b>Recap story</b> — tiap slide lagu teratas benar-benar memutar lagunya, mulai dari bagian tengah.</span></li>
+        <li><i>3</i><span><b>Gambar 1080×1920</b> bergaya Wrapped, siap untuk Instagram Story atau status WhatsApp.</span></li>
+        <li><i>4</i><span><b>Menit yang nyata</b> — dihitung dari durasi pemutaran sungguhan, bukan perkiraan jumlah lagu.</span></li>
+        <li><i>5</i><span><b>Beranda personal</b> — rak “Sering Anda putar”, “Karena suka {artis}”, dan Daily Mix harian.</span></li>
       </ul>
     </div>
   </div>
 </section>
 
-<section id="impor" style="padding-top:20px">
+<section class="sec light" id="impor">
+  <div class="wrap split">
+    <div class="rv">
+      <div class="kicker">Impor</div>
+      <h2 style="margin-top:14px">Pindah tanpa kehilangan.</h2>
+      <p style="margin-top:16px;color:var(--paper-muted);font-size:18px">Playlist lama tidak perlu dibangun ulang. Tempel tautannya, tiap lagu dicocokkan ke katalog, lalu tersimpan sebagai playlist lokal yang bisa diputar atau diunduh.</p>
+      <ul class="bullets">
+        <li><i>1</i><span><b>Library → Impor playlist.</b> Pilih sumbernya: Spotify, YouTube Music, Apple Music, atau mode teks.</span></li>
+        <li><i>2</i><span><b>Tempel tautan.</b> Playlist sumber harus publik; mode teks menerima daftar “Judul - Artis”.</span></li>
+        <li><i>3</i><span><b>Biarkan dicocokkan.</b> Progres tiap lagu terlihat, lalu playlist langsung siap diputar atau diunduh.</span></li>
+      </ul>
+    </div>
+    <div class="shot-col rv"><div class="phone"><img src="assets/shots/04-impor-playlist.jpg" alt="Layar impor playlist" width="576" height="1280"></div></div>
+  </div>
+</section>
+
+<section class="sec dark" id="unduh">
   <div class="wrap">
     <div class="sec-head rv">
-      <div class="kicker">Pindah tanpa kehilangan</div>
-      <h2>Impor playlist dari Spotify, YT Music, atau Apple Music.</h2>
-      <p>Playlist lama tidak perlu dibangun ulang. Tempel tautannya, tiap lagu dicocokkan ke katalog, lalu tersimpan sebagai playlist lokal yang bisa diputar atau diunduh.</p>
-    </div>
-    <div class="pipeline" style="border-block:none;background:transparent;padding:0">
-      <div class="pipe-in">
-        <div class="pipe-step rv">
-          <span class="n">01</span>
-          <h3>Library → Impor playlist</h3>
-          <p>Pilih sumbernya: Spotify, YouTube Music, Apple Music, atau mode teks.</p>
-        </div>
-        <div class="pipe-step rv">
-          <span class="n">02</span>
-          <h3>Tempel tautan</h3>
-          <p>Playlist sumber harus publik. Mode teks menerima daftar “Judul - Artis” bila tautan sulit dibaca.</p>
-        </div>
-        <div class="pipe-step rv">
-          <span class="n">03</span>
-          <h3>Biarkan dicocokkan</h3>
-          <p>Progres tiap lagu terlihat, lalu playlist langsung siap diputar atau diunduh untuk offline.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="download" id="unduh">
-  <div class="wrap dl-in">
-    <div class="dl-copy rv">
+      <div class="kicker">Unduh</div>
       <h2>Pasang Serenade di ponsel Anda.</h2>
-      <p>Pilih varian sesuai Android Anda — isi fiturnya sama, hanya efek kaca yang membedakan. Unduh APK, izinkan pemasangan dari sumber ini, selesai. Tanpa pendaftaran, tanpa iklan, tanpa langganan.</p>
-      <div class="dl-facts" style="margin-top:22px">
-        <span>v1.12 · code 16</span><span>Android 10+</span><span>Ditandatangani kunci tetap</span>
-      </div>
-      <p class="dl-note" style="margin-top:14px">Versi berikutnya bisa dipasang langsung menimpa yang lama — tanpa uninstall.</p>
+      <p>Pilih varian sesuai Android Anda — isi fiturnya sama, hanya efek kaca yang membedakan. Unduh, izinkan pemasangan dari sumber ini, selesai.</p>
     </div>
-    <div class="dl-side rv">
-      <a class="btn btn-primary" href="https://github.com/hrihq/serenade-site/releases/latest/download/serenade-modern.apk">
-        <svg><use href="#i-down"/></svg>Android 13+ — kaca penuh
+    <div class="dl rv">
+      <a href="https://github.com/hrihq/serenade-site/releases/latest/download/serenade-modern.apk">
+        <div class="h"><b>Android 13+</b><span class="sz">v1.12 · kaca penuh</span></div>
+        <p>Blur, refraksi lens, dan animasi blur antar tab aktif penuh.</p>
+        <span class="go"><svg><use href="#i-dl"/></svg>serenade-modern.apk</span>
       </a>
-      <a class="btn btn-ghost" href="https://github.com/hrihq/serenade-site/releases/latest/download/serenade-legacy.apk">
-        <svg><use href="#i-down"/></svg>Android 10–12 — tampilan solid
+      <a href="https://github.com/hrihq/serenade-site/releases/latest/download/serenade-legacy.apk">
+        <div class="h"><b>Android 10–12</b><span class="sz">v1.12 · solid</span></div>
+        <p>Permukaan solid agar tetap ringan di perangkat lama.</p>
+        <span class="go"><svg><use href="#i-dl"/></svg>serenade-legacy.apk</span>
       </a>
-      <p class="dl-note">Modern: blur dan refraksi lens aktif. Legacy: permukaan solid agar tetap ringan di perangkat lama.</p>
     </div>
+    <p class="sign rv"><svg><use href="#i-shield"/></svg>Ditandatangani kunci tetap — versi berikutnya bisa dipasang langsung menimpa yang lama, tanpa uninstall dan tanpa kehilangan pustaka.</p>
   </div>
 </section>
 
-<section id="tanya">
+<section class="sec light" id="tanya">
   <div class="wrap">
     <div class="sec-head rv">
       <div class="kicker">Tanya</div>
       <h2>Yang sering ditanyakan.</h2>
     </div>
     <div class="faq rv">
-      <details open>
-        <summary>Dari mana musiknya?<svg class="chev"><use href="#i-chev"/></svg></summary>
-        <div class="a">Sumber utamanya katalog <b>YouTube Music</b> lewat API InnerTube (<code>music.youtube.com/youtubei/v1</code>), klien <code>WEB_REMIX</code>; URL stream audio di-resolve dengan NewPipeExtractor. Ada jalur kedua, <b>NetEase Cloud Music</b>, untuk lagu berkualitas tinggi (MP3 320 kbps tanpa akun, FLAC bila memakai cookie akun VIP). Tidak ada server rahasia — semuanya dibaca dari layanan publik.</div>
+      <details>
+        <summary>Dari mana musiknya?<svg><use href="#i-chev"/></svg></summary>
+        <div class="a">Sumber utamanya katalog YouTube Music lewat API InnerTube (<code>music.youtube.com/youtubei/v1</code>, klien WEB_REMIX); URL stream audio di-resolve dengan NewPipeExtractor. Ada jalur kedua, NetEase Cloud Music, untuk lagu berkualitas tinggi. Tidak ada server rahasia — semuanya dibaca dari layanan publik.</div>
       </details>
       <details>
-        <summary>Perlu login Google?<svg class="chev"><use href="#i-chev"/></svg></summary>
+        <summary>Perlu login Google?<svg><use href="#i-chev"/></svg></summary>
         <div class="a">Tidak ada login sama sekali. Seluruh katalog bisa diputar tanpa akun, dan pustaka Anda (favorit, riwayat, playlist) disimpan lokal. Satu-satunya hal opsional adalah menempelkan cookie akun NetEase VIP bila ingin kualitas FLAC.</div>
       </details>
       <details>
-        <summary>Kenapa ada dua APK?<svg class="chev"><use href="#i-chev"/></svg></summary>
-        <div class="a">Efek kaca memerlukan API render yang baru ada di Android 13 ke atas. Daripada memaksa satu APK dengan tampilan terkompromi, versi <b>modern</b> (Android 13+) memakai blur dan refraksi penuh, sedangkan versi <b>legacy</b> (Android 10–12) memakai permukaan solid. Fitur dan sumber musiknya identik.</div>
+        <summary>Kenapa ada dua APK?<svg><use href="#i-chev"/></svg></summary>
+        <div class="a">Efek kaca memerlukan API render yang baru ada di Android 13 ke atas. Daripada memaksa satu APK dengan tampilan terkompromi, versi modern memakai blur dan refraksi penuh, sedangkan versi legacy memakai permukaan solid. Fitur dan sumber musiknya identik.</div>
       </details>
       <details>
-        <summary>Apakah bisa dipakai offline?<svg class="chev"><use href="#i-chev"/></svg></summary>
+        <summary>Apakah bisa dipakai offline?<svg><use href="#i-chev"/></svg></summary>
         <div class="a">Bisa. Lagu bisa diunduh permanen dari layar playlist atau hasil impor, dan tiga unduhan berjalan paralel di latar belakang — tetap lanjut walau aplikasi ditutup. Lagu yang sering diputar juga di-cache otomatis tanpa Anda minta.</div>
       </details>
       <details>
-        <summary>Bisa memutar file musik milik sendiri?<svg class="chev"><use href="#i-chev"/></svg></summary>
+        <summary>Bisa memutar file musik milik sendiri?<svg><use href="#i-chev"/></svg></summary>
         <div class="a">Bisa. Library → “Lagu lokal” memindai audio di perangkat, termasuk FLAC, dan memutarnya dalam antrean yang sama dengan lagu streaming.</div>
       </details>
       <details>
-        <summary>Kenapa tidak ada di Play Store?<svg class="chev"><use href="#i-chev"/></svg></summary>
+        <summary>Kenapa tidak ada di Play Store?<svg><use href="#i-chev"/></svg></summary>
         <div class="a">Serenade didistribusikan sebagai APK langsung. Unduh dari halaman ini, lalu izinkan pemasangan dari sumber tersebut di pengaturan Android.</div>
       </details>
       <details>
-        <summary>Harus uninstall dulu saat update?<svg class="chev"><use href="#i-chev"/></svg></summary>
-        <div class="a">Tidak lagi. Semua build ditandatangani dengan kunci yang sama, jadi APK baru bisa dipasang langsung menimpa versi lama tanpa kehilangan pustaka.</div>
+        <summary>Harus uninstall dulu saat update?<svg><use href="#i-chev"/></svg></summary>
+        <div class="a">Tidak. Semua build ditandatangani kunci yang sama, jadi APK versi baru bisa dipasang langsung menimpa versi lama dan pustaka Anda tetap utuh.</div>
       </details>
       <details>
-        <summary>Data saya disimpan di mana?<svg class="chev"><use href="#i-chev"/></svg></summary>
-        <div class="a">Favorit, riwayat, pencarian, playlist, statistik dengar, dan lagu offline tersimpan lokal di perangkat. Tidak ada akun, tidak ada sinkronisasi ke server pihak ketiga, tidak ada iklan.</div>
-      </details>
-      <details>
-        <summary>Apakah aplikasi ini resmi?<svg class="chev"><use href="#i-chev"/></svg></summary>
+        <summary>Apakah aplikasi ini resmi?<svg><use href="#i-chev"/></svg></summary>
         <div class="a">Bukan produk resmi layanan musik mana pun. Serenade adalah klien pihak ketiga untuk pemakaian pribadi yang membaca katalog publik; hak cipta lagu tetap milik pemegangnya masing-masing.</div>
       </details>
     </div>
   </div>
 </section>
 
+</main>
+
 <footer>
-  <div class="wrap foot-in">
-    <span class="foot-brand"><img src="assets/icon.png" alt="">Serenade</span>
-    <div class="foot-links">
-      <a href="#fitur">Fitur</a>
-      <a href="#unduh">Unduh</a>
-      <a href="https://github.com/hrihq/serenade-site/releases" target="_blank" rel="noopener">Semua versi</a>
+  <div class="wrap">
+    <div class="f-top">
+      <div>
+        <a class="brand" href="#top"><img src="assets/icon.png" alt=""><span>Serenade</span></a>
+        <p style="margin-top:14px;color:var(--muted);font-size:14.5px;max-width:34ch">Pemutar musik Android. Tanpa akun, tanpa iklan, tanpa langganan.</p>
+      </div>
+      <div class="f-links">
+        <a href="#tampilan">Tampilan</a>
+        <a href="#fitur">Fitur</a>
+        <a href="#unduh">Unduh</a>
+        <a href="https://github.com/hrihq/serenade-site/releases" target="_blank" rel="noopener">Semua versi</a>
+      </div>
     </div>
-    <p class="foot-note">Serenade adalah pemutar musik untuk pemakaian pribadi. Katalog dan aliran audio berasal dari layanan publik; hak cipta lagu tetap milik pemegangnya. Dibangun dengan NewPipeExtractor (GPL-3.0) untuk resolusi aliran, lrclib.net untuk lirik, serta miuix dan backdrop untuk bahasa visual kaca.</p>
+    <p class="f-note">Serenade adalah pemutar musik untuk pemakaian pribadi. Katalog dan aliran audio berasal dari layanan publik; hak cipta lagu tetap milik pemegangnya. Dibangun dengan NewPipeExtractor (GPL-3.0) untuk resolusi aliran, lrclib.net untuk lirik, serta miuix dan backdrop untuk bahasa visual kaca.</p>
   </div>
 </footer>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Pratinjau layar">
   <button class="lb-x" id="lbX" aria-label="Tutup">&#10005;</button>
-  <button class="lb-btn p" id="lbPrev" aria-label="Sebelumnya">&#8592;</button>
+  <button class="lb-btn lb-p" id="lbPrev" aria-label="Sebelumnya"><svg><use href="#i-left"/></svg></button>
   <figure class="lb-fig">
-    <img id="lbImg" src="" alt="">
+    <img id="lbImg" alt="">
     <figcaption class="lb-cap" id="lbCap"></figcaption>
   </figure>
-  <button class="lb-btn n" id="lbNext" aria-label="Berikutnya">&#8594;</button>
+  <button class="lb-btn lb-n" id="lbNext" aria-label="Berikutnya"><svg><use href="#i-right"/></svg></button>
 </div>
 
 <script>
 (function(){
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hover  = window.matchMedia && window.matchMedia("(hover: hover)").matches;
 
-  /* ── reveal saat digulir ── */
-  var els = document.querySelectorAll(".rv");
+  /* ── reveal ── */
+  var rvs = [].slice.call(document.querySelectorAll(".rv"));
   if (reduce || !("IntersectionObserver" in window)) {
-    els.forEach(function(e){ e.classList.add("in"); });
+    rvs.forEach(function(e){ e.classList.add("in"); });
   } else {
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
-      });
-    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
-    els.forEach(function(e){ io.observe(e); });
+    var io = new IntersectionObserver(function(en){
+      en.forEach(function(x){ if (x.isIntersecting){ x.target.classList.add("in"); io.unobserve(x.target); } });
+    }, { threshold: .12, rootMargin: "0px 0px -40px 0px" });
+    rvs.forEach(function(e){ io.observe(e); });
   }
 
-  /* ── garis progres bacaan ── */
-  var prog = document.getElementById("prog"), ticking = false;
-  function paint(){
-    var h = document.documentElement;
-    var max = h.scrollHeight - h.clientHeight;
+  /* ── progres + nav menempel ── */
+  var prog = document.getElementById("prog"), nav = document.getElementById("nav"), lock = false;
+  function onScroll(){
+    var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
     prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
-    ticking = false;
+    nav.classList.toggle("stuck", h.scrollTop > 24);
+    lock = false;
   }
   window.addEventListener("scroll", function(){
-    if (!ticking) { ticking = true; window.requestAnimationFrame(paint); }
+    if (!lock){ lock = true; requestAnimationFrame(onScroll); }
   }, { passive: true });
-  paint();
+  onScroll();
 
-  /* ── spotlight kartu mengikuti kursor ── */
-  if (!reduce && window.matchMedia("(hover: hover)").matches) {
-    document.querySelectorAll(".cell").forEach(function(cell){
-      cell.addEventListener("pointermove", function(ev){
-        var r = cell.getBoundingClientRect();
-        cell.style.setProperty("--mx", (ev.clientX - r.left) + "px");
-        cell.style.setProperty("--my", (ev.clientY - r.top) + "px");
-      });
+  /* ── dasar kartu: lebar dihitung dari CSS ── */
+  var stack = document.getElementById("stack");
+  var cards = [].slice.call(stack.querySelectorAll(".card"));
+  var capEl = document.getElementById("cap");
+  var countEl = document.getElementById("count");
+  var active = 0, VISIBLE = (window.innerWidth < 820 ? 1 : 2), pad = function(n){ return (n < 10 ? "0" : "") + n; };
+
+  /* lapisan peredup: kedalaman tanpa mencuci warna */
+  cards.forEach(function(c){
+    var sc = document.createElement("span"); sc.className = "sc"; c.querySelector(".fr").appendChild(sc);
+  });
+
+  var layoutW = function(){ return window.innerWidth < 820 ? 0.62 : 0.70; };
+
+  function layout(){
+    var w = cards[0].offsetWidth || 220, n = cards.length;
+    cards.forEach(function(c, i){
+      var d = i - active;
+      if (d > n / 2) d -= n;
+      if (d < -n / 2) d += n;
+      var ad = Math.abs(d);
+      var x = d * w * layoutW(), z = -190 * ad, ry = -30 * d, sc = 1 - 0.14 * ad;
+      c.style.transform = "translate3d(" + x.toFixed(1) + "px," + (ad * 11) + "px," + z + "px) rotateY(" + ry + "deg) scale(" + sc.toFixed(3) + ")";
+      c.style.opacity = ad > VISIBLE ? 0 : 1;
+      c.style.zIndex = String(40 - ad);
+      c.style.pointerEvents = ad > VISIBLE ? "none" : "auto";
+      c.classList.toggle("front", d === 0);
+      var fr = c.querySelector(".fr"), s = c.querySelector(".sc");
+      if (fr) fr.style.boxShadow = ad === 0
+        ? "0 54px 96px -36px rgba(0,0,0,1), 0 0 0 1px rgba(255,255,255,.06)"
+        : "0 " + (16 - ad * 4) + "px " + (40 - ad * 8) + "px -" + (18 - ad * 4) + "px rgba(0,0,0,.92), 0 0 0 1px rgba(0,0,0,.6)";
+      if (s) s.style.opacity = (ad === 0 ? 0 : Math.min(.86, .45 + (ad - 1) * .23)).toFixed(2);
+      c.style.filter = ad === 0 ? "none" : (ad === 1 ? "blur(.3px)" : "blur(.8px)");
     });
+    var f = cards[active];
+    var t = f.querySelector("img");
+    capEl.innerHTML = "<b>" + (t ? t.alt : "") + "</b> — " + f.getAttribute("data-cap");
+    countEl.textContent = pad(active + 1) + " / " + pad(cards.length);
   }
+  cards.forEach(function(c, i){ c.style.marginLeft = "calc(" + (c.offsetWidth || 220) + "px / -2)"; });
 
-  /* ── galeri: tombol geser, kartu aktif, tilt halus ── */
-  var rail = document.getElementById("rail");
-  var shots = rail ? Array.prototype.slice.call(rail.querySelectorAll(".shot")) : [];
-  function step(dir){
-    var w = shots.length ? shots[0].offsetWidth + 18 : 260;
-    rail.scrollBy({ left: dir * w, behavior: reduce ? "auto" : "smooth" });
-  }
-  var bp = document.getElementById("railPrev"), bn = document.getElementById("railNext");
-  if (bp) bp.addEventListener("click", function(){ step(-1); });
-  if (bn) bn.addEventListener("click", function(){ step(1); });
+  function go(dir){ active = Math.max(0, Math.min(cards.length - 1, active + dir)); layout(); }
+  document.getElementById("prev").addEventListener("click", function(){ go(-1); stopAuto(); });
+  document.getElementById("next").addEventListener("click", function(){ go(1); stopAuto(); });
 
-  if (rail && "IntersectionObserver" in window) {
-    var io2 = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        var s = en.target;
-        s.classList.toggle("active", en.isIntersecting && en.intersectionRatio > 0.62);
-      });
-    }, { root: rail, threshold: [0, 0.62, 0.95] });
-    shots.forEach(function(s){ io2.observe(s); });
-  }
-
-  if (!reduce && window.matchMedia("(hover: hover)").matches) {
-    shots.forEach(function(s){
-      var frame = s.querySelector(".frame");
-      s.addEventListener("pointermove", function(ev){
-        var r = s.getBoundingClientRect();
-        var dx = (ev.clientX - r.left) / r.width - .5;
-        var dy = (ev.clientY - r.top) / r.height - .5;
-        frame.style.transform = "rotateY(" + (dx * 7).toFixed(2) + "deg) rotateX(" + (-dy * 7).toFixed(2) + "deg) translateY(-6px)";
-      });
-      s.addEventListener("pointerleave", function(){ frame.style.transform = ""; });
+  cards.forEach(function(c, i){
+    c.addEventListener("click", function(){
+      if (i === active) { openLB(i); } else { active = i; layout(); stopAuto(); }
     });
+  });
+
+  /* ── kontrol papan tombol ── */
+  stack.addEventListener("keydown", function(e){
+    if (e.key === "ArrowRight"){ e.preventDefault(); go(1); stopAuto(); }
+    if (e.key === "ArrowLeft"){ e.preventDefault(); go(-1); stopAuto(); }
+    if (e.key === "Enter" || e.key === " "){ e.preventDefault(); openLB(active); }
+  });
+
+  /* ── geser (pointer) ── */
+  var down = false, sx = 0, dx = 0;
+  stack.addEventListener("pointerdown", function(e){
+    down = true; sx = e.clientX; dx = 0; stack.classList.add("dragging");
+    cards.forEach(function(c){ c.style.transition = "none"; });
+    if (hover) stack.setPointerCapture && stack.setPointerCapture(e.pointerId);
+  });
+  stack.addEventListener("pointermove", function(e){
+    if (!down) return;
+    dx = e.clientX - sx;
+    stack.style.transform = "translateX(" + (dx * .3).toFixed(1) + "px) rotate(" + (dx * .012).toFixed(2) + "deg)";
+  });
+  function endDrag(){
+    if (!down) return;
+    down = false; stack.classList.remove("dragging");
+    stack.style.transform = "";
+    cards.forEach(function(c){ c.style.transition = ""; });
+    if (Math.abs(dx) > 60) { go(dx < 0 ? 1 : -1); stopAuto(); }
+    dx = 0;
   }
+  stack.addEventListener("pointerup", endDrag);
+  stack.addEventListener("pointercancel", endDrag);
+  stack.addEventListener("pointerleave", endDrag);
+
+  /* ── gulir roda ── */
+  var wlock = false;
+  stack.addEventListener("wheel", function(e){
+    var d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    if (Math.abs(d) < 12 || wlock) return;
+    e.preventDefault(); wlock = true; stopAuto(); go(d > 0 ? 1 : -1);
+    setTimeout(function(){ wlock = false; }, 380);
+  }, { passive: false });
+
+  /* ── otomatis sampai disentuh ── */
+  var timer = null, stopped = false;
+  function startAuto(){
+    if (reduce || stopped) return;
+    timer = setInterval(function(){
+      active = active >= cards.length - 1 ? 0 : active + 1; layout();
+    }, 4600);
+  }
+  function stopAuto(){ stopped = true; if (timer) clearInterval(timer); }
 
   /* ── lightbox ── */
   var lb = document.getElementById("lb"), lbImg = document.getElementById("lbImg"),
       lbCap = document.getElementById("lbCap"), idx = 0;
-  function open(i){
-    if (!shots.length) return;
-    idx = (i + shots.length) % shots.length;
-    var s = shots[idx];
-    lbImg.src = s.getAttribute("data-src");
-    lbImg.alt = s.querySelector("img") ? s.querySelector("img").alt : "";
-    var t = s.querySelector(".cap b"), sub = s.querySelector(".cap");
-    lbCap.innerHTML = (t ? "<b>" + t.textContent + "</b> — " : "") + s.getAttribute("data-cap");
-    lb.classList.add("on");
-    document.body.classList.add("lock");
-  }
-  function close(){
-    lb.classList.remove("on");
-    document.body.classList.remove("lock");
-  }
-  shots.forEach(function(s, i){
-    s.setAttribute("data-i", i);
-    s.addEventListener("click", function(){ open(i); });
-    s.addEventListener("keydown", function(ev){
-      if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); open(i); }
-    });
+  window.openLB = function(i){
+    idx = (i + cards.length) % cards.length;
+    var c = cards[idx], img = c.querySelector("img");
+    lbImg.src = c.getAttribute("data-src");
+    lbImg.alt = img ? img.alt : "";
+    lbCap.innerHTML = "<b>" + (img ? img.alt : "") + "</b> — " + c.getAttribute("data-cap");
+    lb.classList.add("on"); document.body.classList.add("lock"); stopAuto();
+  };
+  function closeLB(){ lb.classList.remove("on"); document.body.classList.remove("lock"); }
+  document.getElementById("lbX").addEventListener("click", closeLB);
+  document.getElementById("lbPrev").addEventListener("click", function(){ openLB(idx - 1); });
+  document.getElementById("lbNext").addEventListener("click", function(){ openLB(idx + 1); });
+  lb.addEventListener("click", function(e){ if (e.target === lb) closeLB(); });
+  document.addEventListener("keydown", function(e){
+    if (!lb.classList.contains("on")) return;
+    if (e.key === "Escape") closeLB();
+    if (e.key === "ArrowLeft") openLB(idx - 1);
+    if (e.key === "ArrowRight") openLB(idx + 1);
   });
-  if (lb) {
-    document.getElementById("lbX").addEventListener("click", close);
-    document.getElementById("lbPrev").addEventListener("click", function(){ open(idx - 1); });
-    document.getElementById("lbNext").addEventListener("click", function(){ open(idx + 1); });
-    lb.addEventListener("click", function(ev){ if (ev.target === lb) close(); });
-    document.addEventListener("keydown", function(ev){
-      if (!lb.classList.contains("on")) return;
-      if (ev.key === "Escape") close();
-      if (ev.key === "ArrowLeft") open(idx - 1);
-      if (ev.key === "ArrowRight") open(idx + 1);
-    });
-    /* geser kiri/kanan di dalam lightbox */
-    var sx = null;
-    lb.addEventListener("touchstart", function(ev){ sx = ev.touches[0].clientX; }, { passive: true });
-    lb.addEventListener("touchend", function(ev){
-      if (sx === null) return;
-      var dx = ev.changedTouches[0].clientX - sx;
-      if (Math.abs(dx) > 50) open(dx < 0 ? idx + 1 : idx - 1);
-      sx = null;
+  var t0 = null;
+  lb.addEventListener("touchstart", function(e){ t0 = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener("touchend", function(e){
+    if (t0 === null) return;
+    var d = e.changedTouches[0].clientX - t0;
+    if (Math.abs(d) > 50) openLB(d < 0 ? idx + 1 : idx - 1);
+    t0 = null;
+  });
+
+  /* ── hero: parallax ringan ── */
+  var deck = document.getElementById("deck");
+  if (deck && !reduce) {
+    window.addEventListener("scroll", function(){
+      var y = Math.min(window.scrollY, 520);
+      deck.style.transform = "translateY(" + (y * -0.05).toFixed(1) + "px)";
+    }, { passive: true });
+  }
+
+  /* ── sorot tautan nav sesuai bagian ── */
+  var links = [].slice.call(document.querySelectorAll("#navlinks a"));
+  if ("IntersectionObserver" in window && links.length) {
+    var io3 = new IntersectionObserver(function(en){
+      en.forEach(function(x){
+        if (!x.isIntersecting) return;
+        links.forEach(function(a){ a.classList.toggle("on", a.getAttribute("href") === "#" + x.target.id); });
+      });
+    }, { threshold: .35 });
+    links.forEach(function(a){
+      var s = document.querySelector(a.getAttribute("href"));
+      if (s) io3.observe(s);
     });
   }
+
+  layout();
+  window.addEventListener("resize", function(){
+    VISIBLE = window.innerWidth < 820 ? 1 : 2;
+    cards.forEach(function(c){ c.style.marginLeft = "calc(" + (c.offsetWidth || 220) + "px / -2)"; });
+    layout();
+  });
+  startAuto();
 })();
 </script>
 </body>
