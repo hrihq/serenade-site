@@ -173,7 +173,9 @@ section{padding:76px 0}
 .c-a{grid-column:span 5}
 .c-b{grid-column:span 5}
 .c-wide{grid-column:span 12}
-@media(max-width:880px){.c-hero,.c-a,.c-b,.c-wide{grid-column:span 12;grid-row:auto}}
+.c-d{grid-column:span 5}
+.c-e{grid-column:span 7}
+@media(max-width:880px){.c-hero,.c-a,.c-b,.c-wide,.c-d,.c-e{grid-column:span 12;grid-row:auto}}
 
 /* glass demo inside hero cell */
 .glass-demo{margin-top:auto;padding-top:26px}
@@ -333,9 +335,10 @@ footer{border-top:1px solid var(--line);padding:40px 0 48px}
       <a href="#fitur">Fitur</a>
       <a href="#widget">Widget</a>
       <a href="#recap">Recap</a>
+      <a href="#impor">Impor</a>
       <a href="#tanya">Tanya</a>
     </div>
-    <a class="btn btn-primary btn-sm nav-cta" href="assets/serenade-1.6.apk" download>
+    <a class="btn btn-primary btn-sm nav-cta" href="#unduh">
       <svg><use href="#i-down"/></svg>Unduh APK
     </a>
   </div>
@@ -344,19 +347,21 @@ footer{border-top:1px solid var(--line);padding:40px 0 48px}
 <header class="hero" id="top">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow"><span class="dot"></span>Music player Android</span>
+      <span class="eyebrow"><span class="dot"></span>Music player Android · v1.12</span>
       <h1><span class="l1">Seluruh katalog musik.</span><em>Tanpa akun, tanpa iklan.</em></h1>
-      <p class="hero-sub">Serenade memutar katalog YouTube Music langsung di ponsel Anda — dengan navbar liquid glass, lirik yang mengikuti lagu, dan recap yang bisa dibagikan.</p>
+      <p class="hero-sub">Serenade memutar katalog YouTube Music dan NetEase Cloud Music langsung di ponsel Anda — navbar liquid glass, lirik yang mengikuti lagu, unduhan offline, dan recap yang bisa dibagikan.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="assets/serenade-1.6.apk" download>
-          <svg><use href="#i-down"/></svg>Unduh v1.6
+        <a class="btn btn-primary" href="https://github.com/hrihq/serenade-site/releases/latest/download/serenade-modern.apk">
+          <svg><use href="#i-down"/></svg>Unduh untuk Android 13+
         </a>
-        <a class="btn btn-ghost" href="#fitur">Lihat fitur</a>
+        <a class="btn btn-ghost" href="https://github.com/hrihq/serenade-site/releases/latest/download/serenade-legacy.apk">
+          <svg><use href="#i-down"/></svg>Android 10–12
+        </a>
       </div>
       <div class="hero-meta">
-        <span><svg><use href="#i-android"/></svg>Android 13+</span>
+        <span><svg><use href="#i-android"/></svg>Android 10+</span>
         <span><svg><use href="#i-lock"/></svg>Tanpa login</span>
-        <span><svg><use href="#i-note"/></svg>9,2 MB</span>
+        <span><svg><use href="#i-note"/></svg>Dua APK terpisah</span>
       </div>
     </div>
 
@@ -417,9 +422,14 @@ footer{border-top:1px solid var(--line);padding:40px 0 48px}
       <p>URL audio itag 140/251 di-resolve dari base.js asli, bukan cipher yang diblokir.</p>
     </div>
     <div class="pipe-step rv">
-      <span class="n">03 · PUTAR</span>
+      <span class="n">03 · SUMBER KEDUA</span>
+      <h3>NetEase FLAC</h3>
+      <p>Jalur tambahan untuk lagu lossless — MP3 320k tanpa akun, FLAC bila memakai cookie akun VIP.</p>
+    </div>
+    <div class="pipe-step rv">
+      <span class="n">04 · PUTAR</span>
       <h3>Media3</h3>
-      <p>ExoPlayer + MediaSessionService: notifikasi media, lockscreen, Bluetooth, audio focus.</p>
+      <p>ExoPlayer + MediaSessionService: notifikasi media, lockscreen, Bluetooth, audio focus, dan unduhan paralel di latar belakang.</p>
     </div>
   </div>
 </div>
@@ -469,10 +479,10 @@ footer{border-top:1px solid var(--line);padding:40px 0 48px}
 
       <article class="cell c-b rv">
         <span class="tag">Library</span>
-        <h3>Favorit & riwayat, milik Anda</h3>
-        <p>Disimpan lokal sebagai JSON. Tanpa akun, tanpa sinkronisasi paksa, tanpa server perantara.</p>
+        <h3>Favorit, riwayat, dan lagu offline</h3>
+        <p>Semua tersimpan lokal sebagai JSON. Lagu yang sering diputar ikut di-cache otomatis, dan unduhan manual bersifat permanen.</p>
         <div class="recap-mini">
-          <div class="stat"><b>3</b><span>tab glass</span></div>
+          <div class="stat"><b>4</b><span>tab utama</span></div>
           <div class="stat hi"><b>0</b><span>akun dibutuhkan</span></div>
           <div class="stat"><b>5</b><span>varian widget</span></div>
         </div>
@@ -480,8 +490,32 @@ footer{border-top:1px solid var(--line);padding:40px 0 48px}
 
       <article class="cell c-wide rv">
         <span class="tag">Playback</span>
-        <h3>Antrian, radio, dan kontrol di mana-mana</h3>
-        <p>Shuffle, repeat, antrian penuh, dan autoplay radio saat lagu habis. Kontrol lockscreen dan Bluetooth tersambung langsung ke engine — satu jalur notifikasi, tanpa dobel atau stuck.</p>
+        <h3>Antrian pintar, radio, dan kontrol di mana-mana</h3>
+        <p>Shuffle, repeat, antrian penuh, dan smart queue: saat antrean habis, Serenade melanjutkan dengan radio lagu terakhir sambil menyelipkan lagu dari artis favorit Anda. Kontrol lockscreen dan Bluetooth tersambung langsung ke engine — satu jalur notifikasi, tanpa dobel atau stuck.</p>
+      </article>
+
+      <article class="cell c-d rv">
+        <span class="tag">Sumber kedua</span>
+        <h3>NetEase Cloud Music</h3>
+        <p>Untuk lagu yang tersedia dalam kualitas tinggi: MP3 320 kbps langsung jalan, FLAC aktif bila Anda menempelkan cookie akun VIP. Cari, putar, favoritkan, dan unduh seperti lagu lain.</p>
+      </article>
+
+      <article class="cell c-e rv">
+        <span class="tag">Offline</span>
+        <h3>Unduh sekali, dengar kapan saja</h3>
+        <p>Tiga unduhan berjalan paralel di layanan latar depan — tetap lanjut walau aplikasi ditutup atau layar mati, dan bisa dilanjutkan dari posisi terakhir bila koneksi putus. File lokal selalu menang atas streaming saat memutar.</p>
+      </article>
+
+      <article class="cell c-d rv">
+        <span class="tag">Story</span>
+        <h3>Kartu musik bertingkat</h3>
+        <p>Pilih foto, tambahkan 3–5 lagu, atur posisi kartunya. Orang di foto tampil <b>di depan</b> kartu berkat pemisahan kedalaman, lalu seluruh komposisi diekspor 1080×1920.</p>
+      </article>
+
+      <article class="cell c-e rv">
+        <span class="tag">Suara</span>
+        <h3>Equalizer, bass boost, virtualizer</h3>
+        <p>Efek audio sistem terikat langsung ke sesi pemutar, dengan preset dan slider per band. Tersimpan di perangkat, dan tetap aman bila perangkat tidak mendukung salah satu efek.</p>
       </article>
     </div>
   </div>
@@ -564,10 +598,40 @@ footer{border-top:1px solid var(--line);padding:40px 0 48px}
         <p>Top artis, top lagu, total menit, dan grafik bulanan atau tahunan — dihitung dari riwayat putar Anda sendiri.</p>
       </div>
       <ul class="checklist">
-        <li><svg><use href="#i-check"/></svg><span><b>Recap story</b> — slide beranimasi, bukan tabel angka.</span></li>
-        <li><svg><use href="#i-check"/></svg><span><b>Bagikan sebagai gambar</b> 1080×1920, siap untuk Instagram Story atau WhatsApp.</span></li>
-        <li><svg><use href="#i-check"/></svg><span><b>Beranda personal</b> — rak "Sering Anda putar" dan "Karena suka {artis}" muncul setelah ada riwayat.</span></li>
+        <li><svg><use href="#i-check"/></svg><span><b>Recap story</b> — tiap slide lagu teratas benar-benar memutar lagunya, mulai dari bagian tengah.</span></li>
+        <li><svg><use href="#i-check"/></svg><span><b>Bagikan sebagai gambar</b> 1080×1920 bergaya Wrapped, siap untuk Instagram Story atau status WhatsApp.</span></li>
+        <li><svg><use href="#i-check"/></svg><span><b>Menit yang nyata</b> — dihitung dari durasi pemutaran sungguhan, bukan perkiraan jumlah lagu.</span></li>
+        <li><svg><use href="#i-check"/></svg><span><b>Beranda personal</b> — rak “Sering Anda putar”, “Karena suka {artis}”, dan Daily Mix yang berganti tiap hari.</span></li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<section id="impor" style="padding-top:20px">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kicker">Pindah tanpa kehilangan</div>
+      <h2>Impor playlist dari Spotify, YT Music, atau Apple Music.</h2>
+      <p>Playlist lama tidak perlu dibangun ulang. Tempel tautannya, tiap lagu dicocokkan ke katalog, lalu tersimpan sebagai playlist lokal yang bisa diputar atau diunduh.</p>
+    </div>
+    <div class="pipeline" style="border-block:none;background:transparent;padding:0">
+      <div class="pipe-in">
+        <div class="pipe-step rv">
+          <span class="n">01</span>
+          <h3>Library → Impor playlist</h3>
+          <p>Pilih sumbernya: Spotify, YouTube Music, Apple Music, atau mode teks.</p>
+        </div>
+        <div class="pipe-step rv">
+          <span class="n">02</span>
+          <h3>Tempel tautan</h3>
+          <p>Playlist sumber harus publik. Mode teks menerima daftar “Judul - Artis” bila tautan sulit dibaca.</p>
+        </div>
+        <div class="pipe-step rv">
+          <span class="n">03</span>
+          <h3>Biarkan dicocokkan</h3>
+          <p>Progres tiap lagu terlihat, lalu playlist langsung siap diputar atau diunduh untuk offline.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -576,14 +640,20 @@ footer{border-top:1px solid var(--line);padding:40px 0 48px}
   <div class="wrap dl-in">
     <div class="dl-copy rv">
       <h2>Pasang Serenade di ponsel Anda.</h2>
-      <p>Unduh APK, izinkan pemasangan dari sumber ini, selesai. Tidak ada pendaftaran, tidak ada iklan, tidak ada langganan.</p>
+      <p>Pilih varian sesuai Android Anda — isi fiturnya sama, hanya efek kaca yang membedakan. Unduh APK, izinkan pemasangan dari sumber ini, selesai. Tanpa pendaftaran, tanpa iklan, tanpa langganan.</p>
+      <div class="dl-facts" style="margin-top:22px">
+        <span>v1.12 · code 16</span><span>Android 10+</span><span>Ditandatangani kunci tetap</span>
+      </div>
+      <p class="dl-note" style="margin-top:14px">Versi berikutnya bisa dipasang langsung menimpa yang lama — tanpa uninstall.</p>
     </div>
     <div class="dl-side rv">
-      <a class="btn btn-primary" href="assets/serenade-1.6.apk" download>
-        <svg><use href="#i-down"/></svg>Unduh APK v1.6
+      <a class="btn btn-primary" href="https://github.com/hrihq/serenade-site/releases/latest/download/serenade-modern.apk">
+        <svg><use href="#i-down"/></svg>Android 13+ — kaca penuh
       </a>
-      <div class="dl-facts"><span>v1.6 · code 9</span><span>9,2 MB</span><span>Android 13+</span></div>
-      <p class="dl-note">Ditandatangani dengan keystore tetap, jadi versi berikutnya bisa langsung menimpa tanpa uninstall.</p>
+      <a class="btn btn-ghost" href="https://github.com/hrihq/serenade-site/releases/latest/download/serenade-legacy.apk">
+        <svg><use href="#i-down"/></svg>Android 10–12 — tampilan solid
+      </a>
+      <p class="dl-note">Modern: blur dan refraksi lens aktif. Legacy: permukaan solid agar tetap ringan di perangkat lama.</p>
     </div>
   </div>
 </section>
@@ -597,23 +667,39 @@ footer{border-top:1px solid var(--line);padding:40px 0 48px}
     <div class="faq rv">
       <details open>
         <summary>Dari mana musiknya?<svg class="chev"><use href="#i-chev"/></svg></summary>
-        <div class="a">Dari katalog <b>YouTube Music</b> lewat API InnerTube (<code>music.youtube.com/youtubei/v1</code>), klien <code>WEB_REMIX</code>. URL stream audio di-resolve dengan NewPipeExtractor. Tidak ada server rahasia atau katalog tersendiri — sumbernya sama dengan yang dipakai aplikasi sejenis.</div>
+        <div class="a">Sumber utamanya katalog <b>YouTube Music</b> lewat API InnerTube (<code>music.youtube.com/youtubei/v1</code>), klien <code>WEB_REMIX</code>; URL stream audio di-resolve dengan NewPipeExtractor. Ada jalur kedua, <b>NetEase Cloud Music</b>, untuk lagu berkualitas tinggi (MP3 320 kbps tanpa akun, FLAC bila memakai cookie akun VIP). Tidak ada server rahasia — semuanya dibaca dari layanan publik.</div>
       </details>
       <details>
         <summary>Perlu login Google?<svg class="chev"><use href="#i-chev"/></svg></summary>
-        <div class="a">Tidak. Seluruh katalog bisa diputar tanpa akun. Login bersifat opsional untuk rekomendasi yang lebih personal; bila tidak tersedia, aplikasi otomatis berjalan tanpa login.</div>
+        <div class="a">Tidak ada login sama sekali. Seluruh katalog bisa diputar tanpa akun, dan pustaka Anda (favorit, riwayat, playlist) disimpan lokal. Satu-satunya hal opsional adalah menempelkan cookie akun NetEase VIP bila ingin kualitas FLAC.</div>
+      </details>
+      <details>
+        <summary>Kenapa ada dua APK?<svg class="chev"><use href="#i-chev"/></svg></summary>
+        <div class="a">Efek kaca memerlukan API render yang baru ada di Android 13 ke atas. Daripada memaksa satu APK dengan tampilan terkompromi, versi <b>modern</b> (Android 13+) memakai blur dan refraksi penuh, sedangkan versi <b>legacy</b> (Android 10–12) memakai permukaan solid. Fitur dan sumber musiknya identik.</div>
+      </details>
+      <details>
+        <summary>Apakah bisa dipakai offline?<svg class="chev"><use href="#i-chev"/></svg></summary>
+        <div class="a">Bisa. Lagu bisa diunduh permanen dari layar playlist atau hasil impor, dan tiga unduhan berjalan paralel di latar belakang — tetap lanjut walau aplikasi ditutup. Lagu yang sering diputar juga di-cache otomatis tanpa Anda minta.</div>
+      </details>
+      <details>
+        <summary>Bisa memutar file musik milik sendiri?<svg class="chev"><use href="#i-chev"/></svg></summary>
+        <div class="a">Bisa. Library → “Lagu lokal” memindai audio di perangkat, termasuk FLAC, dan memutarnya dalam antrean yang sama dengan lagu streaming.</div>
       </details>
       <details>
         <summary>Kenapa tidak ada di Play Store?<svg class="chev"><use href="#i-chev"/></svg></summary>
         <div class="a">Serenade didistribusikan sebagai APK langsung. Unduh dari halaman ini, lalu izinkan pemasangan dari sumber tersebut di pengaturan Android.</div>
       </details>
       <details>
-        <summary>Data saya disimpan di mana?<svg class="chev"><use href="#i-chev"/></svg></summary>
-        <div class="a">Favorit, riwayat, pencarian, dan playlist lokal disimpan sebagai JSON di perangkat Anda. Tidak ada akun dan tidak ada sinkronisasi ke server pihak ketiga.</div>
+        <summary>Harus uninstall dulu saat update?<svg class="chev"><use href="#i-chev"/></svg></summary>
+        <div class="a">Tidak lagi. Semua build ditandatangani dengan kunci yang sama, jadi APK baru bisa dipasang langsung menimpa versi lama tanpa kehilangan pustaka.</div>
       </details>
       <details>
-        <summary>Apakah bisa dipakai offline?<svg class="chev"><use href="#i-chev"/></svg></summary>
-        <div class="a">Streaming membutuhkan koneksi internet. Serenade adalah pemutar streaming, bukan pengunduh lagu.</div>
+        <summary>Data saya disimpan di mana?<svg class="chev"><use href="#i-chev"/></svg></summary>
+        <div class="a">Favorit, riwayat, pencarian, playlist, statistik dengar, dan lagu offline tersimpan lokal di perangkat. Tidak ada akun, tidak ada sinkronisasi ke server pihak ketiga, tidak ada iklan.</div>
+      </details>
+      <details>
+        <summary>Apakah aplikasi ini resmi?<svg class="chev"><use href="#i-chev"/></svg></summary>
+        <div class="a">Bukan produk resmi YouTube, Google, Spotify, Apple, maupun NetEase. Serenade adalah klien pihak ketiga untuk pemakaian pribadi yang membaca katalog publik; hak cipta lagu tetap milik pemegangnya.</div>
       </details>
     </div>
   </div>
@@ -625,9 +711,9 @@ footer{border-top:1px solid var(--line);padding:40px 0 48px}
     <div class="foot-links">
       <a href="#fitur">Fitur</a>
       <a href="#unduh">Unduh</a>
-      <a href="https://github.com/hrihq/serenade" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/hrihq/serenade-site/releases" target="_blank" rel="noopener">Semua versi</a>
     </div>
-    <p class="foot-note">Serenade tidak berafiliasi dengan YouTube atau Google. Katalog dan stream berasal dari layanan publik YouTube Music; gunakan sesuai ketentuan layanan tersebut.</p>
+    <p class="foot-note">Serenade tidak berafiliasi dengan YouTube, Google, Spotify, Apple, maupun NetEase. Katalog dan stream berasal dari layanan publik; gunakan sesuai ketentuan layanan masing-masing. Dibangun dengan NewPipeExtractor (GPL-3.0) untuk resolusi aliran, lrclib.net untuk lirik, serta miuix dan backdrop untuk bahasa visual kaca.</p>
   </div>
 </footer>
 
