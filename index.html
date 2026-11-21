@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Serenade — Music player Android, tanpa akun</title>
-<meta name="description" content="Pemutar musik Android dengan navbar liquid glass, lirik sinkron, unduhan offline, video recap, dan widget layar utama. Tanpa akun, tanpa iklan.">
+<title>Serenade 1.20 — Musik, teman, dan cerita Anda</title>
+<meta name="description" content="Serenade 1.20: pemutar musik Android dengan Friend Activity opsional, ranking pendengar mingguan, lirik sinkron, offline, dan liquid glass. Tanpa iklan.">
 <meta name="theme-color" content="#FFF8E1">
 <meta property="og:title" content="Serenade — Music player Android">
-<meta property="og:description" content="Seluruh katalog musik. Tanpa akun, tanpa iklan. Dua APK: Android 13+ dan Android 10–12.">
+<meta property="og:description" content="Serenade 1.20. Musik tanpa login, aktivitas teman opsional, dan ranking mingguan. Android 10 ke atas.">
 <meta property="og:image" content="assets/shots/01-beranda.jpg">
 <link rel="icon" href="assets/icon.png">
 <!-- Font Apple (SF Pro) dipakai langsung bila perangkat Apple; Inter sebagai padanan terdekat di perangkat lain -->
@@ -245,6 +245,14 @@ to{transform:translateX(-50%)}}
 .dl p{color:var(--muted);font-size:16px}
 .dl .go{display:inline-flex;align-items:center;gap:9px;margin-top:6px;color:var(--accent);font-size:15px;font-weight:600}
 .dl svg{width:17px;height:17px}
+.ota-card{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:18px;margin-top:28px;padding:20px 22px;border:1px solid var(--line-2);border-radius:22px;background:linear-gradient(120deg,#fffdf3,var(--cream-2))}
+.ota-mark{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:var(--amber);color:var(--accent)}
+.ota-mark svg{width:21px;height:21px}
+.ota-copy .mono{color:var(--accent);font-size:10px}
+.ota-copy h3{margin-top:4px;font-size:17px;font-weight:600}
+.ota-copy p{margin-top:4px;max-width:68ch;color:var(--muted);font-size:14px;line-height:1.6}
+.ota-action{display:inline-flex;align-items:center;gap:8px;padding:10px 15px;border:1px solid #A98F4E;border-radius:999px;color:var(--accent);font-size:13px;font-weight:600;white-space:nowrap;transition:background .2s,transform .2s}
+.ota-action:hover{background:var(--amber);transform:translateY(-1px)}
 .sign{margin-top:24px;color:var(--muted);font-size:15px;display:flex;align-items:center;gap:11px}
 .sign svg{width:18px;height:18px;flex:0 0 auto;color:var(--accent)}
 
@@ -394,6 +402,23 @@ summary svg{transition:transform .35s cubic-bezier(.2,.7,.2,1)}
     .wui .eq i{animation:none}
   .card,.dev{transition:none}
 }
+/* Release spotlight: readable cards, with no simulated live user activity. */
+.release-section{padding:30px 0 76px}
+.release-panel{border:1px solid var(--line-2);border-radius:30px;padding:clamp(24px,4vw,44px);background:linear-gradient(125deg,#fffdf3,var(--cream-2));box-shadow:0 22px 64px -48px #7a5200}
+.release-heading{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.release-heading h2{font-size:clamp(27px,3vw,38px);line-height:1.2;letter-spacing:-1px;margin-top:12px;max-width:20ch}
+.release-badge{display:inline-flex;padding:6px 12px;border:1px solid var(--line-2);border-radius:999px;font-size:12px;font-weight:600;color:var(--accent);background:#fffdf3}
+.release-link{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:5px}
+.release-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:32px}
+.release-card{border-top:1px solid var(--line-2);padding-top:20px}
+.release-card .mono{color:var(--accent)}
+.release-card h3{font-size:18px;margin:10px 0 8px}
+.release-card p,.release-privacy{font-size:14px;color:var(--muted);line-height:1.75}
+.release-privacy{margin-top:28px;padding-top:20px;border-top:1px solid var(--line-2)}
+.ota-note{margin-top:20px;font-size:14px;color:var(--muted);max-width:75ch}
+.ota-note a{text-decoration:underline;text-underline-offset:3px}
+@media(max-width:680px){.release-cards{grid-template-columns:1fr;gap:20px}.release-panel{border-radius:24px}.release-section{padding-bottom:44px}}
+@media(max-width:680px){.ota-card{grid-template-columns:38px minmax(0,1fr);gap:12px;padding:16px;border-radius:18px}.ota-mark{width:36px;height:36px;border-radius:12px}.ota-action{grid-column:2;justify-self:start}}
 </style>
 </head>
 <body>
@@ -433,15 +458,15 @@ summary svg{transition:transform .35s cubic-bezier(.2,.7,.2,1)}
   <span class="blob s b2" aria-hidden="true"></span>
   <div class="wrap hero-grid">
     <div>
-      <div class="tagline">Music player Android · v1.13</div>
+      <div class="tagline">Music player Android · v1.20</div>
       <h1>Seluruh katalog musik.<br><em>Tanpa akun, tanpa iklan.</em></h1>
-      <p class="lede">Serenade memutar katalog YouTube Music dan NetEase Cloud Music langsung di ponsel — navbar liquid glass, lirik yang mengikuti lagu, unduhan offline, dan recap yang bisa dibagikan.</p>
+      <p class="lede">Musik untuk hari-hari Anda. Putar katalog YouTube Music dan NetEase, simpan lagu untuk offline, lalu temukan apa yang sedang didengarkan teman — hanya jika Anda memilih berbagi.</p>
       <div class="cta-row">
         <a class="btn btn-fill" href="#unduh"><svg><use href="#i-dl"/></svg>Unduh untuk Android 13+</a>
         <a class="btn btn-line" href="#unduh">Android 10–12</a>
       </div>
       <div class="facts">
-        <span>Tanpa login</span><span>Dua APK terpisah</span><span>Tanda tangan tetap</span>
+        <span>Musik tanpa login</span><span>Komunitas opsional</span><span>Android 10+</span>
       </div>
     </div>
     <div class="deck" id="deck" aria-label="Pratinjau aplikasi">
@@ -452,6 +477,22 @@ summary svg{transition:transform .35s cubic-bezier(.2,.7,.2,1)}
 </header>
 
 
+<section class="release-section" id="baru" aria-labelledby="release-title">
+  <div class="wrap">
+    <div class="release-panel rv">
+      <div class="release-heading">
+        <div><span class="release-badge">BARU DI v1.20</span><h2 id="release-title">Lagu yang Anda suka.<br>Teman yang satu frekuensi.</h2></div>
+        <a class="release-link" href="https://github.com/hrihq/serenade-site/releases/tag/v1.20">Lihat catatan rilis <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="release-cards">
+        <article class="release-card"><span class="mono">01 / Friend Activity</span><h3>Temukan lewat teman.</h3><p>Bagikan kode teman, ikuti aktivitas mereka, lalu putar lagu yang sedang mereka dengarkan. Aktivitas diperbarui sekitar 15 detik.</p></article>
+        <article class="release-card"><span class="mono">02 / Top pendengar</span><h3>Seminggu penuh musik.</h3><p>Lihat 50 pendengar teratas berdasarkan menit mendengarkan saat berbagi aktif dan online. Minggu baru dimulai Senin 00.00 UTC.</p></article>
+        <article class="release-card"><span class="mono">03 / Splash baru</span><h3>Awal yang lebih tenang.</h3><p>Logo di tengah, animasi singkat, dan transisi memudar langsung ke beranda yang sudah disiapkan.</p></article>
+      </div>
+      <p class="release-privacy">Anda yang memilih berbagi. Matikan kapan saja lewat menu <strong>Teman</strong>. Judul lagu lokal tidak dikirim; pustaka tetap di perangkat. Identitas komunitas tersimpan di data aplikasi, sehingga menghapus data dapat menghilangkan identitas itu.</p>
+    </div>
+  </div>
+</section>
 <section class="sec dark" id="tampilan">
   <span class="blob o" style="width:min(34vw,420px);aspect-ratio:1;left:-160px;bottom:-120px" aria-hidden="true"></span>
   <div class="wrap">
@@ -493,7 +534,7 @@ summary svg{transition:transform .35s cubic-bezier(.2,.7,.2,1)}
       <div class="stage-foot">
         <div class="stage-cap" id="cap"></div>
         <div class="stage-ctl">
-          <span class="count" id="count">01 / 10</span>
+          <span class="count" id="count">01 / 09</span>
           <button class="rbtn" id="prev" aria-label="Kartu sebelumnya"><svg><use href="#i-left"/></svg></button>
           <button class="rbtn" id="next" aria-label="Kartu berikutnya"><svg><use href="#i-right"/></svg></button>
         </div>
@@ -513,12 +554,12 @@ summary svg{transition:transform .35s cubic-bezier(.2,.7,.2,1)}
     <div class="rows rv">
       <div class="row"><span class="n">01</span><h3>Liquid glass yang benar-benar kaca</h3><p>Navbar dan mini player mengambil sampel lapisan di belakangnya — blur, refraksi lens, slider jelly yang bisa digeser.</p></div>
       <div class="row"><span class="n">02</span><h3>Lirik yang mengikuti lagu</h3><p>Lirik sinkron dari lrclib.net; baris aktif membesar dengan glow lembut dan bisa diketuk untuk melompat.</p></div>
-      <div class="row"><span class="n">03</span><h3>Pustaka milik Anda, di ponsel</h3><p>Favorit, riwayat, dan playlist disimpan lokal sebagai JSON. Tanpa akun, tanpa sinkronisasi ke server orang lain.</p></div>
+      <div class="row"><span class="n">03</span><h3>Pustaka milik Anda, di ponsel</h3><p>Favorit, riwayat, dan playlist disimpan lokal sebagai JSON. Tetap lokal di perangkat. Aktivitas komunitas hanya dibagikan jika Anda mengaktifkannya.</p></div>
       <div class="row"><span class="n">04</span><h3>Antrean yang bisa Anda atur</h3><p>Tahan ikon geser di tab Antrian untuk menaruh lagu mana pun di urutan berikutnya, atau pilih “Putar berikutnya” dari menu lagu. Saat antrean habis, radio lagu terakhir melanjutkan sendiri.</p></div>
       <div class="row"><span class="n">05</span><h3>Sumber kedua untuk FLAC</h3><p>NetEase Cloud Music: MP3 320 kbps langsung jalan, kualitas lossless aktif bila Anda menempelkan cookie akun VIP.</p></div>
       <div class="row"><span class="n">06</span><h3>Unduh sekali, dengar kapan saja</h3><p>Tiga unduhan paralel di layanan latar depan — lanjut walau aplikasi ditutup, bisa dilanjutkan dari posisi terakhir.</p></div>
       <div class="row"><span class="n">07</span><h3>Pindah tanpa kehilangan</h3><p>Impor playlist dari Spotify, YouTube Music, atau Apple Music; tiap lagu dicocokkan lalu disimpan sebagai playlist lokal.</p></div>
-      <div class="row"><span class="n">08</span><h3>Recap dan story</h3><p>Statistik bulanan atau tahunan dari menit yang benar-benar Anda dengar, siap diekspor 1080×1920.</p></div>
+      <div class="row"><span class="n">08</span><h3>Recap musik Anda</h3><p>Statistik bulanan, tahunan, atau sepanjang waktu dari menit yang benar-benar Anda dengar, siap diekspor 1080×1920.</p></div>
       <div class="row"><span class="n">09</span><h3>Widget lima ukuran</h3><p>Satu mesin state untuk Small, Medium, Wide, Compact, dan Now Playing — sinkron real-time dengan pemutaran.</p></div>
       <div class="row"><span class="n">10</span><h3>Equalizer dan virtualizer</h3><p>Lima band plus preset, bass boost, dan efek surround, tersimpan bersama pengaturan tampilan Anda.</p></div>
     </div>
@@ -618,16 +659,21 @@ summary svg{transition:transform .35s cubic-bezier(.2,.7,.2,1)}
     </div>
     <div class="dl rv">
       <a href="https://github.com/hrihq/serenade-site/releases/latest/download/serenade-modern.apk">
-        <div class="h"><b>Android 13+</b><span class="sz">v1.13 · kaca penuh</span></div>
+        <div class="h"><b>Android 13+</b><span class="sz">v1.20 · kaca penuh</span></div>
         <p>Blur, refraksi lens, dan animasi blur antar tab aktif penuh.</p>
         <span class="go"><svg><use href="#i-dl"/></svg>serenade-modern.apk</span>
       </a>
       <a href="https://github.com/hrihq/serenade-site/releases/latest/download/serenade-legacy.apk">
-        <div class="h"><b>Android 10–12</b><span class="sz">v1.13 · solid</span></div>
+        <div class="h"><b>Android 10–12</b><span class="sz">v1.20 · solid</span></div>
         <p>Permukaan solid agar tetap ringan di perangkat lama.</p>
         <span class="go"><svg><use href="#i-dl"/></svg>serenade-legacy.apk</span>
       </a>
     </div>
+    <aside class="ota-card rv" aria-label="Pembaruan aplikasi">
+      <span class="ota-mark"><svg><use href="#i-shield"/></svg></span>
+      <div class="ota-copy"><span class="mono">PEMBARUAN DI APLIKASI</span><h3>Versi baru bisa dipasang dari Serenade.</h3><p>Serenade memberi notifikasi saat ada versi baru. Untuk memicu pemeriksaan kapan saja, buka <strong>Pengaturan → Tentang → Periksa pembaruan</strong>. APK sesuai perangkat akan diunduh, lalu pemasang Android meminta konfirmasi. Pustaka tetap tersimpan.</p></div>
+      <a class="ota-action" href="https://github.com/hrihq/serenade-site/releases/tag/v1.20">Catatan v1.20 <span aria-hidden="true">↗</span></a>
+    </aside>
     <p class="sign rv"><svg><use href="#i-shield"/></svg>Ditandatangani kunci tetap — versi berikutnya bisa dipasang langsung menimpa yang lama, tanpa uninstall dan tanpa kehilangan pustaka.</p>
   </div>
 </section>
@@ -640,12 +686,20 @@ summary svg{transition:transform .35s cubic-bezier(.2,.7,.2,1)}
     </div>
     <div class="faq rv">
       <details>
+        <summary>Bagaimana cara memakai Friend Activity?<svg><use href="#i-chev"/></svg></summary>
+        <div class="a">Buka Teman, masukkan nama tampilan, lalu aktifkan berbagi aktivitas. Salin kode Anda untuk teman, atau masukkan kode mereka untuk mengikuti. Identitas anonim dibuat untuk perangkat tanpa email atau password. Aktivitas musik, nama, hubungan mengikuti, dan menit dengar disimpan di layanan komunitas hanya saat fitur diaktifkan. Mematikan berbagi menghapus aktivitas saat ini dan menyembunyikan Anda dari ranking; data menit dengar yang sudah tercatat tetap tersimpan.</div>
+      </details>
+      <details>
+        <summary>Bagaimana mendapatkan pembaruan v1.20?<svg><use href="#i-chev"/></svg></summary>
+        <div class="a">Buka Pengaturan di aplikasi dan cek pembaruan. Pemeriksaan otomatis berjalan maksimal sekali sehari saat aplikasi dibuka. Jika belum muncul, unduh APK sesuai varian dari halaman ini lalu pasang di atas versi lama. Tidak perlu uninstall.</div>
+      </details>
+      <details>
         <summary>Dari mana musiknya?<svg><use href="#i-chev"/></svg></summary>
         <div class="a">Sumber utamanya katalog YouTube Music lewat API InnerTube (<code>music.youtube.com/youtubei/v1</code>, klien WEB_REMIX); URL stream audio di-resolve dengan NewPipeExtractor. Ada jalur kedua, NetEase Cloud Music, untuk lagu berkualitas tinggi. Tidak ada server rahasia — semuanya dibaca dari layanan publik.</div>
       </details>
       <details>
         <summary>Perlu login Google?<svg><use href="#i-chev"/></svg></summary>
-        <div class="a">Tidak ada login sama sekali. Seluruh katalog bisa diputar tanpa akun, dan pustaka Anda (favorit, riwayat, playlist) disimpan lokal. Satu-satunya hal opsional adalah menempelkan cookie akun NetEase VIP bila ingin kualitas FLAC.</div>
+        <div class="a">Tidak perlu login Google untuk mendengarkan musik. Favorit, riwayat, dan playlist tetap lokal. Friend Activity bersifat opsional dan memakai identitas anonim perangkat. Cookie NetEase VIP juga opsional untuk FLAC.</div>
       </details>
       <details>
         <summary>Kenapa ada dua APK?<svg><use href="#i-chev"/></svg></summary>
@@ -682,7 +736,7 @@ summary svg{transition:transform .35s cubic-bezier(.2,.7,.2,1)}
     <div class="f-top">
       <div>
         <a class="brand" href="#top"><img src="assets/icon.png" alt=""><span>Serenade</span></a>
-        <p style="margin-top:14px;color:var(--muted);font-size:14.5px;max-width:34ch">Pemutar musik Android. Tanpa akun, tanpa iklan, tanpa langganan.</p>
+        <p style="margin-top:14px;color:var(--muted);font-size:14.5px;max-width:34ch">Pemutar musik Android. Musik tanpa login, komunitas sesuai pilihan Anda. Tanpa iklan.</p>
       </div>
       <div class="f-links">
         <a href="#tampilan">Tampilan</a>
